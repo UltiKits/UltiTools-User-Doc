@@ -1,10 +1,38 @@
 ---
-page: true
-title: UltiTools - 新一代 Spigot 基础插件
+layout: home
+
+hero:
+  name: "UltiTools"
+  text: "新一代 Spigot 基础插件"
+  tagline: 模块化设计，开箱即用，轻松管理你的 Minecraft 服务器
+  actions:
+    - theme: brand
+      text: 快速上手
+      link: /guide/quick-start
+    - theme: alt
+      text: 浏览模块
+      link: /module/
+    - theme: alt
+      text: GitHub
+      link: https://github.com/UltiKits
+
+features:
+  - icon: 🧩
+    title: 模块化架构
+    details: 按需安装功能模块，不臃肿不冗余。通过 UPM 包管理器一键安装卸载。
+  - icon: 🌐
+    title: 云端面板
+    details: 通过网页面板远程管理服务器、查看日志、执行命令，随时随地掌控一切。
+  - icon: 🔌
+    title: 丰富的功能模块
+    details: 14+ 官方模块涵盖基础指令、多世界管理、聊天系统、菜单、礼包、交易等。
+  - icon: 🛡️
+    title: 稳定可靠
+    details: 支持 1.8 - 1.21+ 全版本，兼容 Spigot/Paper，经过大量服务器验证。
+  - icon: 📦
+    title: 数据同步
+    details: 支持 MySQL/SQLite 多种数据库，配合面板实现多服同步。
+  - icon: 🌍
+    title: 多语言支持
+    details: 内置中英文支持，可自定义翻译文件，轻松适配不同语言的服务器。
 ---
-
-<script setup>
-import Home from '@theme/components/Home.vue'
-</script>
-
-<Home />
