@@ -37,6 +37,28 @@ const nav: ThemeConfig['nav'] = [
 ]
 
 export const sidebar: ThemeConfig['sidebar'] = {
+  '/module/': [
+    {
+      text: '功能模块',
+      items: [
+        { text: '模块总览', link: '/module/' },
+        { text: 'UltiEssentials — 基础功能', link: '/module/ultiessentials' },
+        { text: 'UltiWorlds — 多世界管理', link: '/module/ultiworlds' },
+        { text: 'UltiLogin — 登录注册', link: '/module/ultilogin' },
+        { text: 'UltiChat — 智能聊天', link: '/module/ultichat' },
+        { text: 'UltiMenu — 自定义菜单', link: '/module/ultimenu' },
+        { text: 'UltiKits — 礼包系统', link: '/module/ultikits' },
+        { text: 'UltiMail — 游戏邮箱', link: '/module/ultimail' },
+        { text: 'UltiBackup — 背包备份', link: '/module/ultibackup' },
+        { text: 'UltiRemoteBag — 远程背包', link: '/module/ultiremotebag' },
+        { text: 'UltiSideBar — 侧边栏', link: '/module/ultisidebar' },
+        { text: 'UltiSocial — 好友系统', link: '/module/ultisocial' },
+        { text: 'UltiTrade — 一对一交易', link: '/module/ultitrade' },
+        { text: 'UltiCleaner — 智能清道夫', link: '/module/ulticleaner' },
+        { text: 'UltiRecipe — 自定义合成', link: '/module/ultirecipe' },
+      ]
+    }
+  ],
   '/guide/': [
     {
       text: '开始',
@@ -213,7 +235,7 @@ export default defineConfigWithTheme<ThemeConfig>({
     ],
 
     editLink: {
-      repo: 'UltiKits/UltiTools-Doc',
+      repo: 'UltiKits/UltiTools-User-Doc',
       text: '在 GitHub 上编辑此页'
     },
   },
