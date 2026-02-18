@@ -20,6 +20,8 @@ UltiTools 6 uses a modular architecture where all features are provided as indep
 | [UltiTrade](./ultitrade) | Player trade (GUI trade interface, confirmation system) |
 | [UltiCleaner](./ulticleaner) | Auto cleaner (timed/smart cleanup, TPS adaptive) |
 | [UltiRecipe](./ultirecipe) | Custom recipes (YAML-configured crafting recipes) |
+| [UltiEconomy](./ultieconomy) | Economy system (Vault dual-wallet, bank interest, wealth leaderboard) |
+| [UltiBot](./ultibot) | Fake player bots (NPC spawning, actions, macro recording, skins) |
 
 ## Installation
 
