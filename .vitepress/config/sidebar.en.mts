@@ -19,6 +19,8 @@ const sidebarModuleEN: DefaultTheme.SidebarItem[] = [
             {text: 'UltiTrade — Player Trade', link: '/en/module/ultitrade'},
             {text: 'UltiCleaner — Auto Cleaner', link: '/en/module/ulticleaner'},
             {text: 'UltiRecipe — Custom Recipes', link: '/en/module/ultirecipe'},
+            {text: 'UltiEconomy — Economy System', link: '/en/module/ultieconomy'},
+            {text: 'UltiBot — Fake Player Bots', link: '/en/module/ultibot'},
         ]
     }
 ]
@@ -42,7 +44,7 @@ const sidebarGuideEN: DefaultTheme.SidebarItem[] = [
             {text: 'Directory Structure', link: '/en/guide/essentials/directory-structure'},
             {text: 'Modules', link: '/en/guide/essentials/module'},
             {text: 'Configuration', link: '/en/guide/essentials/config'},
-            {text: 'RESTful API', link: '/en/guide/essentials/restful-api'},
+            {text: 'Web Panel', link: '/en/guide/essentials/restful-api'},
             {text: 'Account Binding', link: '/en/guide/essentials/account-bind'},
             {text: 'Database & Sync', link: '/en/guide/essentials/database'},
             {text: 'Permissions', link: '/en/guide/essentials/permission'},

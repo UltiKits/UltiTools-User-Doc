@@ -3,7 +3,7 @@ layout: home
 
 hero:
   name: "UltiTools"
-  text: "Next-Gen Spigot Plugin"
+  text: "Next-Gen Paper Plugin"
   tagline: Modular design, ready to use. Manage your Minecraft server with ease.
   actions:
     - theme: brand
@@ -24,14 +24,14 @@ features:
     title: Cloud Panel
     details: Manage your server remotely via web panel — view logs, run commands, edit files from anywhere.
   - icon: 🔌
-    title: Rich Module Library
-    details: 14+ official modules covering essentials, multi-world, chat, menus, kits, trading, and more.
+    title: 16+ Official Modules
+    details: Essentials, multi-world, chat, menus, kits, trading, economy, fake player bots, and more.
   - icon: 🛡️
     title: Stable & Reliable
-    details: Supports Minecraft 1.8 - 1.21+, compatible with Spigot/Paper, battle-tested on thousands of servers.
+    details: Optimized for Paper 1.21+, battle-tested on real servers. Completely free and open-source.
   - icon: 📦
     title: Data Sync
-    details: MySQL/SQLite support with panel integration for multi-server data synchronization.
+    details: JSON/SQLite/MySQL storage backends with panel integration for multi-server synchronization.
   - icon: 🌍
     title: Multi-Language
     details: Built-in Chinese and English support. Easily add custom translations for any language.

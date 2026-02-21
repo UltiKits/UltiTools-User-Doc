@@ -19,6 +19,8 @@ const sidebarModuleZH: DefaultTheme.SidebarItem[] = [
             {text: 'UltiTrade — 一对一交易', link: '/module/ultitrade'},
             {text: 'UltiCleaner — 智能清道夫', link: '/module/ulticleaner'},
             {text: 'UltiRecipe — 自定义合成', link: '/module/ultirecipe'},
+            {text: 'UltiEconomy — 经济系统', link: '/module/ultieconomy'},
+            {text: 'UltiBot — 假人机器人', link: '/module/ultibot'},
         ]
     }
 ]
@@ -30,7 +32,6 @@ const sidebarGuideZH: DefaultTheme.SidebarItem[] = [
             {text: '简介', link: '/guide/introduction'},
             {text: '快速上手', link: '/guide/quick-start'},
             {text: '兼容性', link: '/guide/compatibility'},
-            {text: '从v5迁移', link: '/guide/migration'},
             {text: '已知问题', link: '/guide/problem'},
             {text: '常见问答', link: '/guide/q-a'},
             {text: '支持UltiKits', link: '/guide/sponsor'},
@@ -43,8 +44,8 @@ const sidebarGuideZH: DefaultTheme.SidebarItem[] = [
             {text: '目录结构', link: '/guide/essentials/directory-structure'},
             {text: '功能模块', link: '/guide/essentials/module'},
             {text: '配置文件', link: '/guide/essentials/config'},
-            {text: '插件 RESTful API', link: '/guide/essentials/restful-api'},
-            {text: '账号绑定与会员', link: '/guide/essentials/account-bind'},
+            {text: '网页面板', link: '/guide/essentials/restful-api'},
+            {text: '账号绑定', link: '/guide/essentials/account-bind'},
             {text: '数据库与多端同步', link: '/guide/essentials/database'},
             {text: '权限与LuckPerms', link: '/guide/essentials/permission'},
             {text: '自定义语言与国际化', link: '/guide/essentials/language'},
