@@ -2,7 +2,7 @@
 
 This page lists known issues in the current version and workarounds.
 
-## v6.2.2
+## v6.2.3
 
 No known critical issues at this time.
 

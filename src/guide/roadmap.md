@@ -2,8 +2,12 @@
 
 ## 当前版本
 
-### v6.2.2（当前）
+### v6.2.3（当前）
 
+- 云端令牌自动刷新
+- 错误报告收集器（区分框架/模块错误）
+- ServerPropertiesManager 安全编辑 server.properties
+- 安全加固（路径注入、zip slip 修复）
 - 声明式 GUI 框架
 - 外部插件 API（`UltiToolsAPI.connect()`）
 - 模块间事件总线

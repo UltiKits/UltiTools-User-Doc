@@ -2,8 +2,12 @@
 
 ## Current Version
 
-### v6.2.2 (Current)
+### v6.2.3 (Current)
 
+- Auto-refresh expired cloud tokens
+- Error report collector with framework/module distinction
+- ServerPropertiesManager for safe server.properties editing
+- Security hardening (path injection, zip slip fixes)
 - Declarative GUI framework
 - External Plugin API (`UltiToolsAPI.connect()`)
 - Module EventBus for inter-module communication
