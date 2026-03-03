@@ -2,7 +2,11 @@
 
 ## Current Version
 
-### v6.2.3 (Current)
+### v6.2.4 (Current)
+
+- Code cleanup: removed debug commands and unused imports
+
+### v6.2.3
 
 - Auto-refresh expired cloud tokens
 - Error report collector with framework/module distinction
