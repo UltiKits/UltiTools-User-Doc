@@ -46,6 +46,10 @@ Every entry your copy lacks comes from the official language its name starts wit
 
 A name that starts with no shipped language code (for example `myserver`) uses English for the missing messages, and the console shows one warning suggesting a better name.
 
+After an upgrade, if an entry in your copy no longer has the same placeholders (such as `%s` or `{PLAYER}`) as the new official text, that entry uses the official text and the console shows one warning naming the file and the entry. Your file is not changed; update that entry from the new official file.
+
+Give your copy a name no module ships, such as `en-myserver`. A plain language code other than `en` and `zh` (such as `fr`) may match a language file a later release ships; your file would then be treated as an official file and restored (your version kept as `.bak`).
+
 ### Your file is never overwritten
 
 A custom file such as `en-myserver.json` is yours: no start, `/ul reload`, upgrade or module update ever writes, replaces or backs it up.
