@@ -53,6 +53,13 @@ mysql:
 
 Each module's configuration files are in `plugins/UltiTools/pluginConfig/ModuleName/`. See individual module documentation for details.
 
+### Resetting and blanking a setting (from 6.3.0)
+
+- **Back to the default**: delete the setting's line and restart the server. At start the framework puts the missing setting back with its default and its explanatory comment, and changes no other byte of the file.
+- **Leave a setting blank**: write an empty string, for example `prefix: ''`. **Do not delete the line**: a deleted setting comes back with its default at the next start, which resets it rather than blanking it. An empty string is never rewritten by a start, a reload or a save.
+- **Every setting of a section deleted**: for example, you delete the only line under `messages:` and leave `messages:` with nothing after the colon. At the next start the framework puts the missing settings back below that line; the line itself keeps how you wrote it and its comment, and lines you commented out under it stay where they are.
+- **A section written as an empty value**: `messages: {}`, `messages: ~` or `messages: null` is a value you wrote. The framework does not change it and does not add the missing settings to it. The console names the line: delete the value after the colon (leaving just `messages:`) and the settings come back at the next start, or add them by hand.
+
 ## Reloading Configuration
 
 After modifying configuration files:
