@@ -30,7 +30,7 @@ Prerequisite: The server must have [Vault](https://www.spigotmc.org/resources/va
 
 Upgrade UltiTools-API to 6.3.0 or later first and back up the economy database and configuration. For a shared database, stop every server still running 2.0.0 and never reconnect that old version afterwards. Put the new JAR in `plugins/UltiTools/plugins/` and restart fully; do not replace your file with a complete new config example.
 
-The first startup merges the second primary-currency wallet's cash and savings into the account wallet once, then removes the second wallet. Previously duplicated starting money remains in circulation. Read the per-player and total logs. Storage failure prevents module startup; fix storage and restart to resume, rather than hand-editing merge records. Shared SQLite/MySQL servers claim the merge while others wait; an interrupted claim can be taken over after 30 seconds. JSON files cannot be shared across servers and interruption during a file write still risks corruption. Merged savings may exceed the bank cap, which then blocks further deposits and interest.
+The first startup attempts to merge the second primary-currency wallet's cash and savings into the account wallet, removing only successfully merged second wallets. If the sum cannot be stored exactly, that player's second wallet is kept with a warning. The module still starts, and commands and Vault use only the account wallet. Check the unmerged count in the total log for operator settlement; later startups may still find those wallets. Previously duplicated starting money remains in circulation. Read the per-player and total logs. Storage failure prevents module startup; fix storage and restart to resume, rather than hand-editing merge records. Shared SQLite/MySQL servers claim the merge while others wait; an interrupted claim can be taken over after 30 seconds. JSON files cannot be shared across servers and interruption during a file write still risks corruption. Merged savings may exceed the bank cap, which then blocks further deposits and interest.
 
 Inspect existing values carefully: `interest.enabled: true` now really pays, by default 3% every 1800 seconds, creating money. To opt out set false and run `/ul reload UltiTools-Economy`. Enable interest on only one server sharing a database. An old `tax.enabled: false` now blocks all transfer tax; set true and reload if you want to keep taxation. The new defaults (interest false, taxation true) do not overwrite existing values. Both interest and leaderboard intervals must be 1-107374182 seconds. An invalid startup value refuses the entire module, including Vault, even when interest is off. Reload keeps running intervals and warns instead.
 
@@ -364,10 +364,11 @@ Removed: The 22 unused language entries recorded in the earlier Unreleased histo
   `interest.enabled: true` in both 1.0.0 and 2.0.0, so every server that has run either holds `true`
   unless its operator changed it — **on such a server, upgrading starts paying interest, which creates money**:
   every `interest.interval` seconds (the first payment one interval after the module loads), a player's primary-currency bank balance — the one `/bank`, `/money`, `/eco check <player>`
-  and Vault show, paid once per player and not also on the separate per-currency row that
-  `/bank <primary currency>` shows (UltiKits/UltiEconomy#25) — and their bank balance in every other
+  and Vault show, also when `/bank <primary currency>` names it, paid once per player and not
+  also on any remaining old primary-currency row (UltiKits/UltiEconomy#25) — and their bank balance in every other
   currency with `bank-enabled: true` in `config/currencies.yml` each earn `interest.rate` of itself (`0.03`, 3%, by
-  default), capped at `interest.max-interest` per payment (`10000.0` by default; `-1` means no cap)
+  default), capped per payment only when `interest.max-interest` is above 0 (`10000.0` by default;
+  both `0` and `-1` mean no per-payment cap, not disabled interest)
   and never taking a balance above its bank maximum (`bank.max-balance`, or the currency's own
   `max-bank-balance`, when set above 0 — a balance already at the maximum earns nothing), and an
   online player is told in chat once the credit has been written. **If several servers share one
@@ -412,13 +413,18 @@ Removed: The 22 unused language entries recorded in the earlier Unreleased histo
   given `initial-cash` once. The primary currency's starting cash, bank switch (for deposits and
   withdrawals alike), minimum deposit and maximum bank balance are read from `config/config.yml`; the primary entry's `initial-cash`,
   `bank-enabled`, `min-deposit` and `max-bank-balance` in `config/currencies.yml` are no longer read
-  (its `display-name` and `symbol` still are). Every other currency keeps its own wallet.
+  (its display name and symbol also come from `config/config.yml`'s `currency-name` and
+  `currency-symbol`, not that entry's `display-name` and `symbol`). Every other currency keeps its own wallet.
 
-- **Upgrade consequence — the second wallet is merged once** (UltiKits/UltiEconomy#25). On the first
-  start after upgrading, before anything can read or move a balance, each player's second
-  primary-currency wallet is added to their account wallet — its cash to their cash, its bank balance
-  to their bank balance — and then removed. The server log gets one line per merged player with the
-  amounts and the new balances, and one total line. A later start finds nothing to merge. Nobody's
+- **Upgrade consequence — the second wallet is merged where possible** (UltiKits/UltiEconomy#25). On the first
+  start after upgrading, before anything can read or move a balance, the module attempts to add each
+  player's second primary-currency wallet to their account wallet — its cash to their cash, its bank
+  balance to their bank balance — and removes each successfully merged second wallet. If the sum cannot
+  be stored exactly, nothing is moved for that player: a warning is logged and the second wallet is
+  kept for an operator to settle. The module still starts, and primary-currency commands and Vault
+  use the account wallet, not the unmerged second wallet. The server log gets one line per merged
+  player with the amounts and the new balances, and one total line including the unmerged count.
+  A later start can still find unmerged wallets; it finds nothing to merge only if none remain. Nobody's
   balance goes down: an amount below zero in a second wallet (which no command of this module can
   produce) is not taken from the account, and is logged. A merged bank balance may end above
   `bank.max-balance`; deposits and interest then stop at the cap as before. **Known trade-off:** the
@@ -527,7 +533,9 @@ Removed: The 22 unused language entries recorded in the earlier Unreleased histo
   (`金币` under `language: zh`). Previously the two files were read by different paths and a rename in
   one showed up in only half of the output (UltiKits/UltiEconomy#32).
 
-- `interest.rate` must now be from 0 to 1 and `interest.max-interest` must be -1 (no cap) or at least 0.
+- `interest.rate` must now be from 0 to 1 and `interest.max-interest` must be -1 or at least 0.
+  Both `0` and `-1` mean no per-payment cap; only a positive value caps the payment. To stop paying
+  interest, set `interest.enabled: false` and run `/ul reload UltiTools-Economy`.
   A value outside its range is not used: the default (`0.03`, `10000`) is, with a warning naming the
   key, the value as written and the default, at start-up and after every reload. Previously any value
   was used, so a typo such as `rate: 3` paid 300% per payment (UltiKits/UltiEconomy#29).
