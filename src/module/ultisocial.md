@@ -341,8 +341,6 @@ UltiSocial 使用一个统一的权限节点 `ultisocial.use` 控制所有功能
 
 ### v2.0.0
 
-定版撤回原 Unreleased 中的 README 服务端/Java 徽章与中间 api-version 叙述；以下以实际 1.0.0 → 2.0.0 的声明及已发布行为为准。
-
 #### 新增
 
 - 新增对本版本已不再读取的设置项的警告。若已移除的 `notifications.friend_join_world`（见 `### Removed`）仍保留在

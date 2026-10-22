@@ -113,6 +113,7 @@ After installation, administrators can start using the module immediately. Here 
 | `/gm <mode> <player>` | Change another player's game mode | `ultiessentials.gamemode.other` | Player only |
 | `/gms` | Shortcut to survival mode | `ultiessentials.gamemode.self` | Player only |
 | `/gmc` | Shortcut to creative mode | `ultiessentials.gamemode.self` | Player only |
+| `/gma` | Switch yourself to adventure mode | `ultiessentials.gamemode.self` | Player only |
 | `/gmsp` | Shortcut to spectator mode | `ultiessentials.gamemode.self` | Player only |
 | `/hide` or `/vanish` | Toggle vanish mode (invisible to other players) | `ultiessentials.hide` | Player only |
 
@@ -367,7 +368,7 @@ For custom chat and console messages, copy the official `en.json` to `plugins/Ul
 1. Walk to the location where you want the spawn point
 2. Type `/setspawn` -- new players and respawning players will be teleported here
 3. Walk to the location where you want the lobby
-4. Type `/setlobby` -- all players can now use `/lobby` to get here
+4. Type `/setlobby` -- players granted `ultiessentials.lobby.teleport` can now use `/lobby` to get here
 
 ### Tutorial 2: Using the Home System
 
@@ -459,24 +460,45 @@ If `chestlock.admin-bypass` is set to `true`, admins can open containers locked 
 
 ## Permissions
 
+These permission nodes have no declared default grant and are operators-only by default; grant them explicitly to players. For the basic features below, grant `ultiessentials.back`, `ultiessentials.spawn.teleport`, `ultiessentials.lobby.teleport`, `ultiessentials.wild`, `ultiessentials.home`, `ultiessentials.sethome`, `ultiessentials.delhome`, `ultiessentials.homes`, `ultiessentials.tpa`, `ultiessentials.tpahere`, `ultiessentials.tpaccept`, `ultiessentials.tpdeny`, `ultiessentials.warp.use`, `ultiessentials.warp.list`, `ultiessentials.lock`, `ultiessentials.scoreboard` as needed. For example, with LuckPerms:
+
+```text
+/lp group default permission set ultiessentials.back true
+/lp group default permission set ultiessentials.spawn.teleport true
+/lp group default permission set ultiessentials.lobby.teleport true
+/lp group default permission set ultiessentials.wild true
+/lp group default permission set ultiessentials.home true
+/lp group default permission set ultiessentials.sethome true
+/lp group default permission set ultiessentials.delhome true
+/lp group default permission set ultiessentials.homes true
+/lp group default permission set ultiessentials.tpa true
+/lp group default permission set ultiessentials.tpahere true
+/lp group default permission set ultiessentials.tpaccept true
+/lp group default permission set ultiessentials.tpdeny true
+/lp group default permission set ultiessentials.warp.use true
+/lp group default permission set ultiessentials.warp.list true
+/lp group default permission set ultiessentials.lock true
+/lp group default permission set ultiessentials.scoreboard true
+```
+
 | Permission | Description | Default |
 |------------|-------------|---------|
-| `ultiessentials.back` | Use /back command | Player |
-| `ultiessentials.spawn.teleport` | Teleport to spawn | Player |
+| `ultiessentials.back` | Use /back command | OP (grant explicitly to players) |
+| `ultiessentials.spawn.teleport` | Teleport to spawn | OP (grant explicitly to players) |
 | `ultiessentials.spawn.set` | Set spawn point | OP |
-| `ultiessentials.lobby.teleport` | Teleport to lobby | Player |
+| `ultiessentials.lobby.teleport` | Teleport to lobby | OP (grant explicitly to players) |
 | `ultiessentials.lobby.set` | Set lobby | OP |
-| `ultiessentials.wild` | Use random teleport | Player |
-| `ultiessentials.home` | Teleport to home | Player |
-| `ultiessentials.sethome` | Set a home | Player |
-| `ultiessentials.delhome` | Delete a home | Player |
-| `ultiessentials.homes` | List all homes | Player |
-| `ultiessentials.tpa` | Send TPA request | Player |
-| `ultiessentials.tpahere` | Send TPA-here request | Player |
-| `ultiessentials.tpaccept` | Accept teleport request | Player |
-| `ultiessentials.tpdeny` | Deny teleport request | Player |
-| `ultiessentials.warp.use` | Use warp teleport | Player |
-| `ultiessentials.warp.list` | View warp list | Player |
+| `ultiessentials.wild` | Use random teleport | OP (grant explicitly to players) |
+| `ultiessentials.home` | Teleport to home | OP (grant explicitly to players) |
+| `ultiessentials.sethome` | Set a home | OP (grant explicitly to players) |
+| `ultiessentials.delhome` | Delete a home | OP (grant explicitly to players) |
+| `ultiessentials.homes` | List all homes | OP (grant explicitly to players) |
+| `ultiessentials.tpa` | Send TPA request | OP (grant explicitly to players) |
+| `ultiessentials.tpahere` | Send TPA-here request | OP (grant explicitly to players) |
+| `ultiessentials.tpaccept` | Accept teleport request | OP (grant explicitly to players) |
+| `ultiessentials.tpdeny` | Deny teleport request | OP (grant explicitly to players) |
+| `ultiessentials.warp.use` | Use warp teleport | OP (grant explicitly to players) |
+| `ultiessentials.warp.list` | View warp list | OP (grant explicitly to players) |
 | `ultiessentials.warp.set` | Create warps | OP |
 | `ultiessentials.warp.delete` | Delete warps | OP |
 | `ultiessentials.fly` | Toggle own flight mode | OP |
@@ -495,8 +517,8 @@ If `chestlock.admin-bypass` is set to `true`, admins can open containers locked 
 | `ultiessentials.invsee` | View player inventory | OP |
 | `ultiessentials.endersee` | View player ender chest | OP |
 | `ultiessentials.armorsee` | View player equipment | OP |
-| `ultiessentials.lock` | Use chest lock | Player |
-| `ultiessentials.scoreboard` | Toggle scoreboard | Player |
+| `ultiessentials.lock` | Use chest lock | OP (grant explicitly to players) |
+| `ultiessentials.scoreboard` | Toggle scoreboard | OP (grant explicitly to players) |
 | `ultiessentials.whitelist.manage` | Manage whitelist | OP |
 | `ultiessentials.deathpunish.bypass` | Bypass death penalty | OP |
 
@@ -533,8 +555,6 @@ A: Confirm `features.scheduled-commands.enabled` is set to `true`. The format is
 ## Changelog
 
 ### v2.0.0
-
-The original Unreleased README server/Java badge claim was withdrawn at finalization; the README states only the framework requirement. Seven unused old language entries (`feature_disabled` and six `teleport_*` messages) were also removed without changing visible output. The entries below describe the finalized release.
 
 #### Changed
 

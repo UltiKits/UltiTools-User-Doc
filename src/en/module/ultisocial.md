@@ -341,8 +341,6 @@ Friend requests are not persisted -- they are stored in memory and cleared on se
 
 ### v2.0.0
 
-Finalization withdrew the Unreleased README server/Java badge and intermediate api-version wording; the entries below describe the actual 1.0.0 → 2.0.0 declaration and released behavior.
-
 #### Added
 
 - A warning for a setting this version no longer reads. If `notifications.friend_join_world` (removed,

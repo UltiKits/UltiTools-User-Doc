@@ -58,9 +58,15 @@ Command aliases: both `/kit` and `/kits` work.
 
 ## Permissions
 
+These permission nodes have no declared default grant and are operators-only by default; grant them explicitly to players. For the basic features below, grant `ultikits.kits.use` as needed. For example, with LuckPerms:
+
+```text
+/lp group default permission set ultikits.kits.use true
+```
+
 | Permission | Description | Default |
 |------------|-------------|---------|
-| `ultikits.kits.use` | Basic access: browse GUI, claim kits, list kits | All players |
+| `ultikits.kits.use` | Basic access: browse GUI, claim kits, list kits | OP (grant explicitly to players) |
 | `ultikits.kits.admin` | Admin access: create, edit, delete, reload kits | OP only |
 
 Additionally, each kit can have its own custom permission node (see the `permission` field in kit configuration).
@@ -249,7 +255,7 @@ After modifying kit YAML files, run `/kits reload` to reload them. After modifyi
 
 ### How to set up permissions?
 
-1. The basic permission `ultikits.kits.use` is granted to all players by default
+1. The basic permission `ultikits.kits.use` is operators-only by default; grant it explicitly to players
 2. Admin permission `ultikits.kits.admin` is OP-only by default
 3. Individual kit permissions are set in each kit's `permission` field -- leave it empty for unrestricted access
 4. Use a permissions plugin (e.g., LuckPerms) to assign permissions to players or groups
@@ -277,8 +283,6 @@ The `/kits create` command reads non-empty items from your current inventory. If
 ## Changelog
 
 ### v2.0.0
-
-Four never-shown old language entries from Unreleased were removed without changing visible output; the missing-economy state now has the dedicated reply documented below, no longer an insufficient-balance reply. The README server/Java badge wording was withdrawn at finalization; only its framework requirement remains.
 
 #### Changed
 

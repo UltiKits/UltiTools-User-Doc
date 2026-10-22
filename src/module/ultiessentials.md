@@ -113,6 +113,7 @@ UltiEssentials 是 UltiTools 框架下功能最丰富的基础插件模块，涵
 | `/gm <模式> <玩家>` | 切换其他玩家的游戏模式 | `ultiessentials.gamemode.other` | 仅玩家 |
 | `/gms` | 快捷切换到生存模式 | `ultiessentials.gamemode.self` | 仅玩家 |
 | `/gmc` | 快捷切换到创造模式 | `ultiessentials.gamemode.self` | 仅玩家 |
+| `/gma` | 快捷切换自己到冒险模式 | `ultiessentials.gamemode.self` | 仅玩家 |
 | `/gmsp` | 快捷切换到旁观模式 | `ultiessentials.gamemode.self` | 仅玩家 |
 | `/hide` 或 `/vanish` | 切换隐身模式（对其他玩家不可见） | `ultiessentials.hide` | 仅玩家 |
 
@@ -367,7 +368,7 @@ tabbar:
 1. 在游戏中走到你想设置为出生点的位置
 2. 输入 `/setspawn` -- 此后新玩家首次加入和死亡重生都会被传送到这里
 3. 走到你想设置为主城的位置
-4. 输入 `/setlobby` -- 此后所有玩家可以使用 `/lobby` 传送到这里
+4. 输入 `/setlobby` -- 此后已获 `ultiessentials.lobby.teleport` 权限的玩家可以使用 `/lobby` 传送到这里
 
 ### 教程二：使用家系统
 
@@ -459,24 +460,45 @@ features:
 
 ## 权限节点
 
+这些权限节点未声明默认授权，默认仅 OP 拥有；普通玩家需显式授权。要使用下表的基础功能，请按需授予 `ultiessentials.back`、`ultiessentials.spawn.teleport`、`ultiessentials.lobby.teleport`、`ultiessentials.wild`、`ultiessentials.home`、`ultiessentials.sethome`、`ultiessentials.delhome`、`ultiessentials.homes`、`ultiessentials.tpa`、`ultiessentials.tpahere`、`ultiessentials.tpaccept`、`ultiessentials.tpdeny`、`ultiessentials.warp.use`、`ultiessentials.warp.list`、`ultiessentials.lock`、`ultiessentials.scoreboard`。例如用 LuckPerms 给默认玩家组授权：
+
+```text
+/lp group default permission set ultiessentials.back true
+/lp group default permission set ultiessentials.spawn.teleport true
+/lp group default permission set ultiessentials.lobby.teleport true
+/lp group default permission set ultiessentials.wild true
+/lp group default permission set ultiessentials.home true
+/lp group default permission set ultiessentials.sethome true
+/lp group default permission set ultiessentials.delhome true
+/lp group default permission set ultiessentials.homes true
+/lp group default permission set ultiessentials.tpa true
+/lp group default permission set ultiessentials.tpahere true
+/lp group default permission set ultiessentials.tpaccept true
+/lp group default permission set ultiessentials.tpdeny true
+/lp group default permission set ultiessentials.warp.use true
+/lp group default permission set ultiessentials.warp.list true
+/lp group default permission set ultiessentials.lock true
+/lp group default permission set ultiessentials.scoreboard true
+```
+
 | 权限 | 描述 | 默认 |
 |------|------|------|
-| `ultiessentials.back` | 使用 /back 命令 | 玩家 |
-| `ultiessentials.spawn.teleport` | 传送到出生点 | 玩家 |
+| `ultiessentials.back` | 使用 /back 命令 | OP（需显式授权普通玩家） |
+| `ultiessentials.spawn.teleport` | 传送到出生点 | OP（需显式授权普通玩家） |
 | `ultiessentials.spawn.set` | 设置出生点 | OP |
-| `ultiessentials.lobby.teleport` | 传送到主城 | 玩家 |
+| `ultiessentials.lobby.teleport` | 传送到主城 | OP（需显式授权普通玩家） |
 | `ultiessentials.lobby.set` | 设置主城 | OP |
-| `ultiessentials.wild` | 使用随机传送 | 玩家 |
-| `ultiessentials.home` | 传送到家 | 玩家 |
-| `ultiessentials.sethome` | 设置家 | 玩家 |
-| `ultiessentials.delhome` | 删除家 | 玩家 |
-| `ultiessentials.homes` | 列出所有家 | 玩家 |
-| `ultiessentials.tpa` | 发送 TPA 请求 | 玩家 |
-| `ultiessentials.tpahere` | 发送 TPA-here 请求 | 玩家 |
-| `ultiessentials.tpaccept` | 接受传送请求 | 玩家 |
-| `ultiessentials.tpdeny` | 拒绝传送请求 | 玩家 |
-| `ultiessentials.warp.use` | 使用地标传送 | 玩家 |
-| `ultiessentials.warp.list` | 查看地标列表 | 玩家 |
+| `ultiessentials.wild` | 使用随机传送 | OP（需显式授权普通玩家） |
+| `ultiessentials.home` | 传送到家 | OP（需显式授权普通玩家） |
+| `ultiessentials.sethome` | 设置家 | OP（需显式授权普通玩家） |
+| `ultiessentials.delhome` | 删除家 | OP（需显式授权普通玩家） |
+| `ultiessentials.homes` | 列出所有家 | OP（需显式授权普通玩家） |
+| `ultiessentials.tpa` | 发送 TPA 请求 | OP（需显式授权普通玩家） |
+| `ultiessentials.tpahere` | 发送 TPA-here 请求 | OP（需显式授权普通玩家） |
+| `ultiessentials.tpaccept` | 接受传送请求 | OP（需显式授权普通玩家） |
+| `ultiessentials.tpdeny` | 拒绝传送请求 | OP（需显式授权普通玩家） |
+| `ultiessentials.warp.use` | 使用地标传送 | OP（需显式授权普通玩家） |
+| `ultiessentials.warp.list` | 查看地标列表 | OP（需显式授权普通玩家） |
 | `ultiessentials.warp.set` | 创建地标 | OP |
 | `ultiessentials.warp.delete` | 删除地标 | OP |
 | `ultiessentials.fly` | 切换自己的飞行模式 | OP |
@@ -495,8 +517,8 @@ features:
 | `ultiessentials.invsee` | 查看玩家背包 | OP |
 | `ultiessentials.endersee` | 查看玩家末影箱 | OP |
 | `ultiessentials.armorsee` | 查看玩家装备 | OP |
-| `ultiessentials.lock` | 使用箱子锁 | 玩家 |
-| `ultiessentials.scoreboard` | 切换计分板 | 玩家 |
+| `ultiessentials.lock` | 使用箱子锁 | OP（需显式授权普通玩家） |
+| `ultiessentials.scoreboard` | 切换计分板 | OP（需显式授权普通玩家） |
 | `ultiessentials.whitelist.manage` | 管理白名单 | OP |
 | `ultiessentials.deathpunish.bypass` | 绕过死亡惩罚 | OP |
 
@@ -533,8 +555,6 @@ A: 确认 `features.scheduled-commands.enabled` 设为 `true`。命令格式为 
 ## 更新日志
 
 ### v2.0.0
-
-原 Unreleased 中的 README 服务端/Java 徽章说法已在定版时撤回，README 只声明框架要求。另删除七条不再有调用方的旧语言条目（`feature_disabled` 与六条 `teleport_*`）；实际可见内容不变。下列记录以最终发布说明为准。
 
 #### 变更
 

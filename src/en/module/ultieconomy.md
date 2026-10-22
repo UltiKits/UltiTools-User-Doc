@@ -86,13 +86,24 @@ These commands work from both in-game and the console, and support offline playe
 
 ## Permissions
 
+These permission nodes have no declared default grant and are operators-only by default; grant them explicitly to players. For the basic features below, grant `ultieconomy.money`, `ultieconomy.bank`, `ultieconomy.pay`, `ultieconomy.deposit`, `ultieconomy.withdraw`, `ultieconomy.note` as needed. For example, with LuckPerms:
+
+```text
+/lp group default permission set ultieconomy.money true
+/lp group default permission set ultieconomy.bank true
+/lp group default permission set ultieconomy.pay true
+/lp group default permission set ultieconomy.deposit true
+/lp group default permission set ultieconomy.withdraw true
+/lp group default permission set ultieconomy.note true
+```
+
 | Permission | Description | Default |
 |------------|-------------|---------|
-| `ultieconomy.money` | View your own balance | All players |
-| `ultieconomy.bank` | View bank balance | All players |
-| `ultieconomy.pay` | Transfer cash to other players | All players |
-| `ultieconomy.deposit` | Deposit cash to bank | All players |
-| `ultieconomy.withdraw` | Withdraw cash from bank | All players |
+| `ultieconomy.money` | View your own balance | OP (grant explicitly to players) |
+| `ultieconomy.bank` | View bank balance | OP (grant explicitly to players) |
+| `ultieconomy.pay` | Transfer cash to other players | OP (grant explicitly to players) |
+| `ultieconomy.deposit` | Deposit cash to bank | OP (grant explicitly to players) |
+| `ultieconomy.withdraw` | Withdraw cash from bank | OP (grant explicitly to players) |
 | `ultieconomy.admin` | Admin economy operations (give/take/set/check) | OP |
 
 ## Configuration
@@ -292,7 +303,7 @@ A: All UltiEconomy permissions start with `ultieconomy.`. We recommend using a p
 /lp group admin permission set ultieconomy.admin true
 ```
 
-Basic permissions (money, bank, pay, deposit, withdraw) are available to all players by default. The admin permission is OP-only by default.
+Basic permissions (money, bank, pay, deposit, withdraw) are operators-only by default; grant them explicitly to players. The admin permission is OP-only by default.
 
 **Q: Which balance does Vault use?**
 
@@ -313,8 +324,6 @@ A: Player account data is stored in whatever database UltiTools-API is configure
 ## Changelog
 
 ### v3.0.0
-
-Removed: The 22 unused language entries recorded in the earlier Unreleased history were removed during message-key cleanup. This is not another player feature change and changes no displayed text. Migrate custom messages using the new language-key rules below.
 
 #### Changed
 

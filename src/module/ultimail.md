@@ -95,10 +95,17 @@ UltiMail 提供了一套完整的游戏内邮件系统。玩家可以向在线�
 
 ### 权限节点
 
+这些权限节点未声明默认授权，默认仅 OP 拥有；普通玩家需显式授权。要使用下表的基础功能，请按需授予 `ultimail.use`、`ultimail.send`。例如用 LuckPerms 给默认玩家组授权：
+
+```text
+/lp group default permission set ultimail.use true
+/lp group default permission set ultimail.send true
+```
+
 | 权限 | 说明 | 默认 |
 |------|------|------|
-| `ultimail.use` | 使用邮件系统（收件箱、发件箱、阅读、删除等） | 所有玩家 |
-| `ultimail.send` | 发送邮件 | 所有玩家 |
+| `ultimail.use` | 使用邮件系统（收件箱、发件箱、阅读、删除等） | OP（需显式授权普通玩家） |
+| `ultimail.send` | 发送邮件 | OP（需显式授权普通玩家） |
 | `ultimail.admin.sendall` | 群发邮件给全服玩家 | OP |
 | `ultimail.admin.multiattach` | 发送邮件时使用多物品附件 GUI（普通玩家只能附带主手物品） | OP |
 | `ultimail.recall` | 使用召回功能 | OP |
@@ -263,12 +270,12 @@ A: 检查以下几点：
 
 ### Q: 改了配置文件没效果？
 
-A: 修改 `plugins/UltiTools/pluginConfig/UltiMail/config/mail.yml` 后，使用 `/ul reload` 重载配置即可生效，无需重启服务器。注意配置文件中的数值有范围限制，超出范围的值会告警并使用框架提供的有效值，不会自动覆盖你写的配置。更换 JAR 仍需重启。
+A: 修改 `plugins/UltiTools/pluginConfig/UltiMail/config/mail.yml` 后，使用 `/ul reload` 重载配置即可生效，无需重启服务器。数值超出范围时，启动会拒绝加载模块；在 `/ul reload` 时会拒绝这整个配置文件的变更，保留原运行值（同文件中其他有效改动也不会生效），不会自动改写文件。请先修正越界值，再重新执行重载。更换 JAR 仍需重启。
 
 ### Q: 权限怎么设置？
 
 A: UltiMail 使用标准 Bukkit 权限系统，你可以通过任意权限管理插件（如 LuckPerms）来分配权限。例如：
-- 允许所有玩家使用邮件：`ultimail.use` 和 `ultimail.send`（默认已有）
+- 允许所有玩家使用邮件：`ultimail.use` 和 `ultimail.send`（需显式授权普通玩家）
 - 禁止某个玩家发送邮件：取消 `ultimail.send` 权限
 - 允许管理员群发邮件：添加 `ultimail.admin.sendall` 权限
 

@@ -54,13 +54,13 @@ Enter 0 to withdraw money/experience; cancel cancels only the prompt, and a 10-s
 
 Lift an item normally from your own inventory, then click a left-side slot. Clicking an occupied offer with a held item swaps them; panes themselves are valid offers. Rearranging your own inventory works, but shift-click, double-click collect and unknown actions stay refused. Previews, disabled icons and empty-slot placeholders cannot be taken, and third parties cannot operate the trade. Taking back items or completing/cancelling drops overflow at your feet. Logs retain actual stakes rather than quantities mutated by inventory merging.
 
-Completion checks both balances and experience first, withdraws both payers, then pays. Explicit refused withdrawals/payments cancel and attempt refunds, moving no items/experience or tax. A failed refund logs both UUIDs, amount and currency at SEVERE for operator correction: this is cross-plugin settlement, not an atomic database transaction. An economy call committing then throwing is treated as refused but its actual result is unknown, possibly creating/destroying money. Check actual provider records using the `Outcome unknown:` log; do not blindly refund twice. Experience reads are exact through level 21,863; beyond 2,147,483,647 points experience cannot be offered and a pre-existing offer cancels before transfer. Experience tax floors exact decimals; NaN/nonpositive rates take none. Paper's own rebuilding above about 411,616 points can drift by a few to about 100 points.
+Completion checks both balances and experience first, withdraws both payers, then pays. Explicit refused withdrawals/payments cancel and attempt refunds, moving no items/experience or tax. A failed refund logs both UUIDs, amount and currency at SEVERE for operator correction: this is cross-plugin settlement, not an atomic database transaction. An economy call committing then throwing is treated as refused but its actual result is unknown, possibly creating/destroying money. Check actual provider records using the `Outcome unknown:` log; do not blindly refund twice. The absence of a definite refund-failure log does not mean no refund happened. Experience reads are exact through level 21,863; beyond 2,147,483,647 points experience cannot be offered and a pre-existing offer cancels before transfer. Experience tax floors exact decimals; NaN/nonpositive rates take none. Paper's own rebuilding above about 411,616 points can drift by a few to about 100 points.
 
 A missing participant's cancelled stake is saved in trade_pending_returns. Next join delivers only what fits; the rest remains saved for a later join after freeing space, not dropped then. A failed storage write instead drops at the last location with logs. SQLite/MySQL claim once before delivery and remove after saving; CLAIMED entries left by crash/failed save are not automatically redelivered, and joins ask for admin checks. JSON can redeliver twice after a crash before datasource.flushRate reaches disk. Paper saveData may log failure and return normally, which the module cannot detect.
 
 ### Operator checks for pending returns
 
-These commands require `ultitrade.admin` and work for players and console. Ordinary commands still require `ultitrade.use` and are player-only. List entries first, inspect the player's inventory and ender chest, then decide whether they actually received the items:
+These commands require both `ultitrade.use` and `ultitrade.admin` and work for players and console. Ordinary commands still require `ultitrade.use` and are player-only. List entries first, inspect the player's inventory and ender chest, then decide whether they actually received the items:
 
 | Command | Meaning | Example |
 |---|---|---|
@@ -333,8 +333,6 @@ Trade logs are stored through UltiTools-API's DataOperator, which means the actu
 ## Changelog
 
 ### v2.0.0
-
-Earlier Unreleased wording about api-version/README badges, keeping unavailable offers through reload and cancelling on every confirmation-page close was corrected. The final entries below distinguish withdrawn offers, Esc returning to trading and terminal closes without reviving superseded behavior.
 
 #### Added
 

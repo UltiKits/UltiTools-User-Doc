@@ -375,13 +375,20 @@ When a player types `:heart:` in chat, it is automatically replaced with a red h
 
 ## Permissions
 
+These permission nodes have no declared default grant and are operators-only by default; grant them explicitly to players. For the basic features below, grant `ultichat.channel`, `ultichat.emoji` as needed. For example, with LuckPerms:
+
+```text
+/lp group default permission set ultichat.channel true
+/lp group default permission set ultichat.emoji true
+```
+
 | Permission | Description | Default |
 |------------|-------------|---------|
 | `ultichat.admin` | Admin commands (`/uchat`) | OP |
-| `ultichat.channel` | Channel commands (`/ch`) | Player |
+| `ultichat.channel` | Channel commands (`/ch`) | OP (grant explicitly to players) |
 | `ultichat.channel.<name>` | Join a specific channel (set via `permission` field in channel config) | Varies |
 | `ultichat.color` | Use `&` color codes in chat messages | OP |
-| `ultichat.emoji` | Use emoji shortcodes in chat | Player |
+| `ultichat.emoji` | Use emoji shortcodes in chat | OP (grant explicitly to players) |
 | `ultichat.spam.bypass` | Bypass anti-spam checks | OP |
 | `ultichat.autoreply.bypass` | Bypass auto-reply triggers | OP |
 

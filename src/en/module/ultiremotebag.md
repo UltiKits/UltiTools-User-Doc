@@ -326,8 +326,6 @@ A: `/bag clear` empties the contents of a bag page (all items are removed) but k
 
 ### v2.0.0
 
-The never-displayed opening_bag language entry from Unreleased was removed without changing visible output. Earlier claims about bulk-cache saves at stop, guaranteed writes on clean stop, restart-only timeout and fixed-Chinese occupancy messages are superseded by the final behavior below. The README server/Java badge claim was withdrawn.
-
 #### Added
 
 - **One bag page is edited on one server at a time** when several servers share one database. Opening a page

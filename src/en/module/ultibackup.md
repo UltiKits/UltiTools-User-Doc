@@ -74,12 +74,21 @@ Command aliases: `/backup`, `/invbackup`, `/bk`
 
 ### Player Permissions
 
+These permission nodes have no declared default grant and are operators-only by default; grant them explicitly to players. For the basic features below, grant `ultibackup.use`, `ultibackup.create`, `ultibackup.delete`, `ultibackup.auto` as needed. For example, with LuckPerms:
+
+```text
+/lp group default permission set ultibackup.use true
+/lp group default permission set ultibackup.create true
+/lp group default permission set ultibackup.delete true
+/lp group default permission set ultibackup.auto true
+```
+
 | Permission | Description | Default |
 |------------|-------------|---------|
-| `ultibackup.use` | Basic backup features (open GUI, list, restore) | All players |
-| `ultibackup.create` | Create manual backups | All players |
-| `ultibackup.delete` | Delete backups (right-click in GUI) | All players |
-| `ultibackup.auto` | Receive automatic backups (death/quit/timed) | All players |
+| `ultibackup.use` | Basic backup features (open GUI, list, restore) | OP (grant explicitly to players) |
+| `ultibackup.create` | Create manual backups | OP (grant explicitly to players) |
+| `ultibackup.delete` | Delete backups (right-click in GUI) | OP (grant explicitly to players) |
+| `ultibackup.auto` | Receive automatic backups (death/quit/timed) | OP (grant explicitly to players) |
 
 ### Admin Permissions
 
@@ -227,7 +236,7 @@ A: After modifying `plugins/UltiTools/pluginConfig/UltiBackup/config/backup.yml`
 
 **Q: How to set up permissions?**
 
-A: All UltiBackup permissions start with `ultibackup.`. We recommend using a permissions plugin like LuckPerms to manage them. The basic permissions (`ultibackup.use`, `ultibackup.create`, `ultibackup.delete`, `ultibackup.auto`) are available to all players by default. The admin permission `ultibackup.admin` is only available to OPs by default.
+A: All UltiBackup permissions start with `ultibackup.`. We recommend using a permissions plugin like LuckPerms to manage them. The basic permissions (`ultibackup.use`, `ultibackup.create`, `ultibackup.delete`, `ultibackup.auto`) are operators-only by default; grant them explicitly to players. The admin permission `ultibackup.admin` is only available to OPs by default.
 
 Example (LuckPerms):
 ```

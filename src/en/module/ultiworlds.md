@@ -194,7 +194,7 @@ world_isolation:
 | `world_isolation.separate_health` | boolean | `false` | Isolate health |
 | `world_isolation.separate_hunger` | boolean | `false` | Isolate hunger |
 | `world_isolation.separate_effects` | boolean | `false` | Isolate potion effects |
-| `world_isolation.shared_worlds` | text | `# World groups that share inventory (comma-separated)` | See the key and complete example above |
+| `world_isolation.shared_worlds` | list of strings | `["world,world_nether,world_the_end"]` | Each string is one group; separate world names within a group with commas |
 
 
 ## Usage Tutorials
@@ -295,9 +295,15 @@ Supported placeholders:
 
 ## Permissions
 
+These permission nodes have no declared default grant and are operators-only by default; grant them explicitly to players. For the basic features below, grant `ultiworlds.use` as needed. For example, with LuckPerms:
+
+```text
+/lp group default permission set ultiworlds.use true
+```
+
 | Permission | Description | Default |
 |------------|-------------|---------|
-| `ultiworlds.use` | Basic usage (open GUI, teleport, view info) | Player |
+| `ultiworlds.use` | Basic usage (open GUI, teleport, view info) | OP (grant explicitly to players) |
 | `ultiworlds.admin` | Admin permission (includes all sub-permissions) | OP |
 | `ultiworlds.admin.create` | Create worlds | OP |
 | `ultiworlds.admin.delete` | Delete worlds | OP |
@@ -388,8 +394,6 @@ Do not hand-edit internal tables while running. When repairing legacy shared SQL
 ## Changelog
 
 ### v2.0.0
-
-The unused old WorldListGUI implementation recorded in Unreleased was removed without changing anything visible to players or operators; the eight-key list on this page is authoritative for unused configuration. The entries below use the actual 2.0.0 release and corrected panel acknowledgment semantics: dispatch is not proof of deletion.
 
 #### Added
 

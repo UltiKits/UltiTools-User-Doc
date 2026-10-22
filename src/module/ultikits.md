@@ -58,9 +58,15 @@ UltiKits 提供了一套完整的礼包系统。管理员可以在游戏内通�
 
 ## 权限
 
+这些权限节点未声明默认授权，默认仅 OP 拥有；普通玩家需显式授权。要使用下表的基础功能，请按需授予 `ultikits.kits.use`。例如用 LuckPerms 给默认玩家组授权：
+
+```text
+/lp group default permission set ultikits.kits.use true
+```
+
 | 权限节点 | 说明 | 默认 |
 |----------|------|------|
-| `ultikits.kits.use` | 使用基础功能：浏览 GUI、领取礼包、查看列表 | 所有玩家 |
+| `ultikits.kits.use` | 使用基础功能：浏览 GUI、领取礼包、查看列表 | OP（需显式授权普通玩家） |
 | `ultikits.kits.admin` | 管理员功能：创建、编辑、删除、重载礼包 | OP |
 
 此外，每个礼包可以配置独立的权限节点（见礼包配置中的 `permission` 字段）。
@@ -249,9 +255,9 @@ items: "..."
 
 ### 权限怎么设置？
 
-1. 基础使用权限 `ultikits.kits.use` 默认所有玩家都有
+1. 基础使用权限 `ultikits.kits.use` 默认仅 OP 拥有，普通玩家需显式授权
 2. 管理权限 `ultikits.kits.admin` 默认只有 OP
-3. 单个礼包的权限在礼包配置文件的 `permission` 字段设置，留空表示所有人可领取
+3. 单个礼包的权限在礼包配置文件的 `permission` 字段设置，留空表示不额外检查礼包权限，仍需 `ultikits.kits.use`
 4. 使用权限插件（如 LuckPerms）给玩家或权限组添加对应权限
 
 ### 经济系统不生效怎么办？
@@ -277,8 +283,6 @@ UltiKits 的价格功能需要安装 Vault 插件和一个经济插件（如 Ess
 ## 更新日志
 
 ### v2.0.0
-
-原 Unreleased 中四条从未显示的旧语言条目已移除，显示内容不因此变化；其中经济不可用的状态已由下列修复给予专用提示，不再是余额不足。README 的服务端/Java 徽章表述在定版时撤回，只保留框架版本要求。
 
 #### 变更
 

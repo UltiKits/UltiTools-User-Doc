@@ -50,10 +50,9 @@ autoreply:
   cooldown: 10  # 全局冷却时间（单位：秒）
   rules:
     greeting:
-      keyword: "hello"
+      keyword: "服务器IP"
       response:
-        - "&aWelcome to the server!"
-        - "&7Type /help for assistance"
+        - "服务器地址：play.example.com"
       mode: contains
       case-sensitive: false
 ```
@@ -66,7 +65,7 @@ autoreply:
 /uchat reload
 ```
 
-现在，当有玩家在聊天中输入包含 "hello" 的消息时，系统会自动回复两行欢迎文字。
+现在，当有玩家在聊天中输入包含“服务器IP”的消息时，系统会自动回复服务器地址。
 
 ## 命令
 
@@ -79,7 +78,7 @@ autoreply:
 | `/uchat reload` | 重新加载所有配置文件 | `/uchat reload` |
 | `/uchat autoreply list` | 列出所有自动回复规则 | `/uchat autoreply list` |
 | `/uchat autoreply add <名称> <回复内容>` | 添加一条自动回复规则（默认为包含匹配模式） | `/uchat autoreply add faq 服务器地址是 play.example.com` |
-| `/uchat autoreply setkeyword <名称> <关键词...>` | 设置完整词组为关键词 | `/uchat autoreply setkeyword faq server IP` |
+| `/uchat autoreply setkeyword <名称> <关键词...>` | 设置完整词组为关键词 | `/uchat autoreply setkeyword faq 服务器IP` |
 | `/uchat autoreply remove <名称>` | 移除一条自动回复规则 | `/uchat autoreply remove faq` |
 
 ### 频道命令
@@ -113,23 +112,23 @@ chat:
 join-quit:
   join-message-enabled: true  # 是否启用自定义进入消息
   # 进入消息格式，支持 PlaceholderAPI 变量
-  join-message-format: "&a[+] &e%player_name% &7joined the server"
+  join-message-format: "&a[+] &e%player_name% &7加入了服务器"
   quit-message-enabled: true  # 是否启用自定义离开消息
   # 离开消息格式
-  quit-message-format: "&c[-] &e%player_name% &7left the server"
+  quit-message-format: "&c[-] &e%player_name% &7离开了服务器"
   welcome-enabled: true  # 是否启用入服欢迎消息（仅发送给进入的玩家）
   # 欢迎消息内容，每行一条
   welcome-lines:
     - "&7========================================"
-    - "&6Welcome, &e%player_name%&6!"
-    - "&7Online: &f%online_players%&7/&f%max_players%"
+    - "&6欢迎，&e%player_name%&6！"
+    - "&7在线：&f%online_players%&7/&f%max_players%"
     - "&7========================================"
   title:
     enabled: true  # 是否在入服时显示标题
-    main: "&6Welcome Back"  # 标题主文本
+    main: "&6欢迎回来"  # 标题主文本
     sub: "&7%player_name%"  # 标题副文本
   # 首次入服广播消息（全服可见），留空则不广播
-  first-join-message: "&6Welcome new player &e%player_name%&6!"
+  first-join-message: "&6欢迎新玩家 &e%player_name%&6！"
 
 # @提及功能
 mentions:
@@ -157,13 +156,13 @@ autoreply:
   cooldown: 10  # 全局冷却时间，同一玩家触发自动回复后需等待的秒数（范围：0-300）
   rules:
     server-ip:  # 规则名称（唯一标识）
-      keyword: "server IP"  # 匹配关键词
-      response: "Server address: play.example.com"  # 回复内容（字符串或列表）
+      keyword: "服务器IP"  # 匹配关键词
+      response: "服务器地址：play.example.com"  # 回复内容（字符串或列表）
       mode: contains  # 匹配模式：contains（包含）/ exact（精确）/ regex（正则表达式）
       case-sensitive: false  # 是否区分大小写
     rules-info:
-      keyword: "rules"
-      response: "Please check /rules for server rules."
+      keyword: "规则"
+      response: "请输入 /rules 查看服务器规则。"
       mode: contains
       case-sensitive: false
 ```
@@ -176,12 +175,12 @@ autoreply:
   cooldown: 10
   rules:
     welcome:
-      keyword: "hello"
+      keyword: "服务器IP"
       mode: contains
       case-sensitive: false
-      response:  # 多行回复
-        - "&aWelcome to the server!"
-        - "&7Type /help for assistance"
+      response:  # 多行回复（组合两条发布示例的回复文本）
+        - "服务器地址：play.example.com"
+        - "请输入 /rules 查看服务器规则。"
       permission: ""  # 留空表示所有人都能触发
       commands:  # 触发后以控制台身份执行的命令
         - "give {player} bread 5"
@@ -197,17 +196,17 @@ channels:
   default-channel: global  # 新玩家的默认频道
   channels:
     global:  # 频道名称
-      display-name: "&f[Global]"  # 频道显示名称，支持颜色代码
+      display-name: "&f[全局]"  # 频道显示名称，支持颜色代码
       permission: ""  # 加入权限，留空表示所有人可用
       range: -1  # 消息传播范围（-1 = 无限）
       cross-world: true  # 是否跨世界传播
     local:
-      display-name: "&a[Local]"
+      display-name: "&a[本地]"
       permission: ""
       range: 100  # 100 格范围内的玩家才能看到消息
       cross-world: false  # 不跨世界
     staff:
-      display-name: "&c[Staff]"
+      display-name: "&c[管理]"
       format: "{display} &f{player}&7: {message}"
       permission: "ultichat.channel.staff"  # 需要权限才能加入
       range: -1
@@ -224,10 +223,10 @@ announcements:
   chat:
     enabled: true  # 是否启用聊天广播
     interval: 300  # 广播间隔（单位：秒，范围：1-107374182）
-    prefix: "&6[Announcement] &f"  # 广播前缀
+    prefix: "&6[公告] &f"  # 广播前缀
     messages:  # 广播消息列表，轮播显示
-      - "Welcome! Type /help for assistance."
-      - "Please follow server rules!"
+      - "欢迎！输入 /help 获取帮助。"
+      - "请遵守服务器规则！"
 
   # Boss 栏广播
   bossbar:
@@ -236,7 +235,7 @@ announcements:
     duration: 10  # Boss 栏显示时长（单位：秒，范围：1-60）
     color: BLUE  # Boss 栏颜色：BLUE / GREEN / PINK / PURPLE / RED / WHITE / YELLOW
     messages:  # 广播消息列表
-      - "&eWelcome to the server!"
+      - "&e欢迎来到服务器！"
 
   # 标题广播
   title:
@@ -246,7 +245,7 @@ announcements:
     stay: 70  # 标题停留时间（单位：tick，范围：1-200）
     fade-out: 20  # 标题淡出时间（单位：tick，范围：0-100）
     messages:  # 广播消息列表，用 || 分隔主标题和副标题
-      - "&6Welcome!||&7Enjoy your stay"
+      - "&6欢迎！||&7祝你玩得愉快"
 ```
 
 ### emojis.yml - 表情符号配置
@@ -265,7 +264,7 @@ emojis:
 
 你可以添加更多自定义映射，格式为 `":短代码:": "替换文本"`。
 
-上面的文本示例以英文配置为例。公告、进出服文本、出厂频道显示名与两条示例回复会按框架 `language` 写入配置；仍为内置文本的值跟随语言，你编辑过的值保留。修改语言后用完整 `/ul reload` 或重启，`/uchat reload` 不重读框架语言。请编辑这些配置文件，而不是指望修改解压出的语言文件改变公告文本。
+上面的内置文本采用 `language: zh` 的发布默认值；教程中的自定义规则可按需修改。公告、进出服文本、出厂频道显示名与两条示例回复会按框架 `language` 写入配置；仍为内置文本的值跟随语言，你编辑过的值保留。修改语言后用完整 `/ul reload` 或重启，`/uchat reload` 不重读框架语言。请编辑这些配置文件，而不是指望修改解压出的语言文件改变公告文本。
 
 ### 从旧版本升级
 
@@ -286,21 +285,21 @@ emojis:
 ```yaml
 join-quit:
   join-message-enabled: true
-  join-message-format: "&a&l>>> &e%player_name% &ajoined the game &7| &fOnline: %online_players%"
+  join-message-format: "&a[+] &e%player_name% &7加入了服务器"
   quit-message-enabled: true
-  quit-message-format: "&c&l<<< &e%player_name% &cleft the game"
+  quit-message-format: "&c[-] &e%player_name% &7离开了服务器"
   welcome-enabled: true
   welcome-lines:
     - ""
-    - "&6&l    Welcome back, &e%player_name%&6!"
-    - "&7    Currently &f%online_players% &7players online"
-    - "&7    Type &a/help &7for assistance"
+    - "&6欢迎，&e%player_name%&6！"
+    - "&7在线：&f%online_players%&7/&f%max_players%"
+    - "欢迎！输入 /help 获取帮助。"
     - ""
   title:
     enabled: true
-    main: "&6&lWelcome Back"
+    main: "&6欢迎回来"
     sub: "&e%player_name%"
-  first-join-message: "&b&l* &6New player &e%player_name% &6has joined for the first time! Welcome! &b*"
+  first-join-message: "&6欢迎新玩家 &e%player_name%&6！"
 ```
 
 ### 场景二：创建员工专属频道
@@ -311,7 +310,7 @@ join-quit:
 channels:
   channels:
     staff:
-      display-name: "&c[Staff]"
+      display-name: "&c[管理]"
       format: "{display} &f{player}&7: {message}"
       permission: "ultichat.channel.staff"
       range: -1
@@ -329,11 +328,11 @@ announcements:
   chat:
     enabled: true
     interval: 600  # 每 10 分钟广播一次
-    prefix: "&6[Announcement] &f"
+    prefix: "&6[公告] &f"
     messages:
-      - "Server rules: /rules"
-      - "Need help? Contact an admin: /msg admin"
-      - "Daily check-in for rewards: /checkin"
+      - "请遵守服务器规则！"
+      - "欢迎！输入 /help 获取帮助。"
+      - "请输入 /rules 查看服务器规则。"
 ```
 
 消息会按顺序轮播，第一次显示第一条，第二次显示第二条，依此类推。
@@ -346,15 +345,14 @@ announcements:
 autoreply:
   rules:
     ip-question:
-      keyword: "(?i)(ip|address|server address|how.+join)"
+      keyword: "(?i)(服务器IP|服务器地址)"
       mode: regex
       case-sensitive: false
       response:
-        - "&aServer address: &fplay.example.com"
-        - "&aPort: &f25565"
+        - "服务器地址：play.example.com"
 ```
 
-这条规则会在玩家消息中包含"ip"、"address"、"server address" 或类似 "how to join" 的英文词组时自动回复。
+这条规则会在玩家消息中包含“服务器IP”或“服务器地址”时自动回复。
 
 ### 场景五：添加自定义表情
 
@@ -375,13 +373,20 @@ emojis:
 
 ## 权限
 
+这些权限节点未声明默认授权，默认仅 OP 拥有；普通玩家需显式授权。要使用下表的基础功能，请按需授予 `ultichat.channel`、`ultichat.emoji`。例如用 LuckPerms 给默认玩家组授权：
+
+```text
+/lp group default permission set ultichat.channel true
+/lp group default permission set ultichat.emoji true
+```
+
 | 权限节点 | 说明 | 默认 |
 |----------|------|------|
 | `ultichat.admin` | 使用管理命令（`/uchat`） | OP |
-| `ultichat.channel` | 使用频道命令（`/ch`） | 玩家 |
+| `ultichat.channel` | 使用频道命令（`/ch`） | OP（需显式授权普通玩家） |
 | `ultichat.channel.<频道名>` | 加入指定频道（在频道配置中的 `permission` 字段设置） | 视配置 |
 | `ultichat.color` | 在聊天消息中使用 `&` 颜色代码 | OP |
-| `ultichat.emoji` | 在聊天中使用表情短代码 | 玩家 |
+| `ultichat.emoji` | 在聊天中使用表情短代码 | OP（需显式授权普通玩家） |
 | `ultichat.spam.bypass` | 豁免防刷屏检测 | OP |
 | `ultichat.autoreply.bypass` | 豁免自动回复触发 | OP |
 
@@ -478,7 +483,7 @@ UltiChat 的权限通过你使用的权限插件（如 LuckPerms、PermissionsEx
   模块启动时与每次重载时，只要时间窗口大于 0，就会记录一条指明文件、键名与当前值的警告；
   将其设为 `0` 并执行 `/uchat reload`，即可恢复之前的重复计数规则（UltiKits/UltiChat#14）。
 
-- 你在本版本之前编辑过的频道格式现在会生效。频道格式此前从未被应用，因此编辑它（例如把出厂的
+- 您在本版本之前编辑过的频道格式现在会生效。频道格式此前从未被应用，因此编辑它（例如把出厂的
   `{display}&f: {message}` 改色为 `{display}&e: {message}`）不会有任何显示；改动后它已不再是三条旧出厂字符串之一，
   因此现在会按原样生效：不含 `{player}` 或 `{displayname}` 的格式不会显示发送者名字，不含 `{message}` 的格式不会显示消息内容。
   模块启动时与每次重载时，对每个格式生效且缺少上述内容的频道，会记录一条指明文件、频道与需要添加什么的警告（UltiKits/UltiChat#16）。
@@ -605,7 +610,7 @@ UltiChat 的权限通过你使用的权限插件（如 LuckPerms、PermissionsEx
   （global 为 `{display}&f: {message}`，local 为 `{display}&7: {message}`，
   staff 为 `&c[Staff] &f{player}&7: {message}`），其中两条不含玩家名。与这三条字符串之一完全相同的格式
   会在模块启动时从 `channels.yml` 中移除，因此升级后服务器的聊天显示与之前完全相同，文件也如实反映这一点。
-  代价是：无法刻意选用这三条字符串本身——只要改动任意一个字符（例如加一个空格），该格式就会被视为你自己的格式并生效
+  代价是：无法刻意选用这三条字符串本身——只要改动任意一个字符（例如加一个空格），该格式就会被视为您自己的格式并生效
   （UltiKits/UltiChat#16、#18）。
 
 - 使用 `/uchat autoreply add`、`/uchat autoreply setkeyword` 与 `/uchat autoreply remove`

@@ -194,7 +194,7 @@ world_isolation:
 | `world_isolation.separate_health` | boolean | `false` | 隔离生命值 |
 | `world_isolation.separate_hunger` | boolean | `false` | 隔离饥饿值 |
 | `world_isolation.separate_effects` | boolean | `false` | 隔离药水效果 |
-| `world_isolation.shared_worlds` | text | `# 共享背包的世界组（同组内共享，逗号分隔）` | 见键名及上方完整示例 |
+| `world_isolation.shared_worlds` | 字符串列表 | `["world,world_nether,world_the_end"]` | 每个字符串是一组，组内世界名用逗号分隔 |
 
 
 ## 使用教程
@@ -295,9 +295,15 @@ world_isolation:
 
 ## 权限节点
 
+这些权限节点未声明默认授权，默认仅 OP 拥有；普通玩家需显式授权。要使用下表的基础功能，请按需授予 `ultiworlds.use`。例如用 LuckPerms 给默认玩家组授权：
+
+```text
+/lp group default permission set ultiworlds.use true
+```
+
 | 权限 | 描述 | 默认 |
 |------|------|------|
-| `ultiworlds.use` | 基础使用权限（打开 GUI、传送、查看信息） | 玩家 |
+| `ultiworlds.use` | 基础使用权限（打开 GUI、传送、查看信息） | OP（需显式授权普通玩家） |
 | `ultiworlds.admin` | 管理员权限（包含所有子权限） | OP |
 | `ultiworlds.admin.create` | 创建世界 | OP |
 | `ultiworlds.admin.delete` | 删除世界 | OP |
@@ -388,8 +394,6 @@ UltiPanel 成功分派时 `data.output` 是 `Command dispatched to the server co
 ## 更新日志
 
 ### v2.0.0
-
-原 Unreleased 中未使用的旧世界列表实现 WorldListGUI 已移除，不改变玩家或服主能看到的行为；失效配置以本页八键清单为准。以下采用实际 2.0.0 发布版本与更正后的面板回执语义，不把命令已分派当作删除成功。
 
 #### 新增
 

@@ -485,8 +485,6 @@ Check that the `open-menu` value matches the target menu filename. For example, 
 
 ### v2.0.0
 
-The Unreleased README server/Java badge claim was withdrawn at finalization; this release requires UltiTools-API 6.3.0 or later. Deferring commands by a tick does not mean every button closes the window; when configured to close, that close precedes the commands.
-
 #### Changed
 
 - This version requires UltiTools 6.3.0 or later and declares `api-version: 630` in `plugin.yml`

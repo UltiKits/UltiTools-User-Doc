@@ -307,8 +307,6 @@ Player sidebar toggle preferences are automatically saved to the data source con
 
 ### v2.0.0
 
-The Unreleased README server/Java badge claim was withdrawn. Earlier blanket claims about yielding to any other sidebar and never changing edited lines are replaced by the private-scoreboard rule and exact old-default-line migration exceptions below.
-
 #### Changed
 
 - This version requires UltiTools-API 6.3.0 or later and raises `api-version` in `plugin.yml` from

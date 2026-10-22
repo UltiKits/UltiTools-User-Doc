@@ -74,12 +74,21 @@ UltiBackup 是 UltiTools 框架的一个模块，为 Minecraft 服务器提供�
 
 ### 玩家权限
 
+这些权限节点未声明默认授权，默认仅 OP 拥有；普通玩家需显式授权。要使用下表的基础功能，请按需授予 `ultibackup.use`、`ultibackup.create`、`ultibackup.delete`、`ultibackup.auto`。例如用 LuckPerms 给默认玩家组授权：
+
+```text
+/lp group default permission set ultibackup.use true
+/lp group default permission set ultibackup.create true
+/lp group default permission set ultibackup.delete true
+/lp group default permission set ultibackup.auto true
+```
+
 | 权限节点 | 说明 | 默认 |
 |----------|------|------|
-| `ultibackup.use` | 使用备份基础功能（打开 GUI、查看列表、恢复备份） | 所有玩家 |
-| `ultibackup.create` | 创建手动备份 | 所有玩家 |
-| `ultibackup.delete` | 删除备份（在 GUI 中右键点击） | 所有玩家 |
-| `ultibackup.auto` | 享受自动备份（死亡/退出/定时） | 所有玩家 |
+| `ultibackup.use` | 使用备份基础功能（打开 GUI、查看列表、恢复备份） | OP（需显式授权普通玩家） |
+| `ultibackup.create` | 创建手动备份 | OP（需显式授权普通玩家） |
+| `ultibackup.delete` | 删除备份（在 GUI 中右键点击） | OP（需显式授权普通玩家） |
+| `ultibackup.auto` | 享受自动备份（死亡/退出/定时） | OP（需显式授权普通玩家） |
 
 ### 管理员权限
 
@@ -228,7 +237,7 @@ A: 修改 `plugins/UltiTools/pluginConfig/UltiBackup/config/backup.yml` 后，�
 
 **Q: 权限怎么设置？**
 
-A: UltiBackup 的权限节点都以 `ultibackup.` 开头。推荐使用 LuckPerms 等权限插件来管理。基础权限 `ultibackup.use`、`ultibackup.create`、`ultibackup.delete`、`ultibackup.auto` 默认所有玩家都有，管理员权限 `ultibackup.admin` 默认只有 OP 才有。
+A: UltiBackup 的权限节点都以 `ultibackup.` 开头。推荐使用 LuckPerms 等权限插件来管理。基础权限 `ultibackup.use`、`ultibackup.create`、`ultibackup.delete`、`ultibackup.auto` 默认仅 OP 拥有，普通玩家需显式授权，管理员权限 `ultibackup.admin` 默认只有 OP 才有。
 
 示例（LuckPerms）：
 ```

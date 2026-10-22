@@ -65,12 +65,20 @@ UltiLogin 为服务器提供完整的账号保护方案。玩家进入服务器�
 
 ## 权限
 
+这些权限节点未声明默认授权，默认仅 OP 拥有；普通玩家需显式授权。要使用下表的基础功能，请按需授予 `ultilogin.changepassword`、`ultilogin.email`、`ultilogin.recover`。例如用 LuckPerms 给默认玩家组授权：
+
+```text
+/lp group default permission set ultilogin.changepassword true
+/lp group default permission set ultilogin.email true
+/lp group default permission set ultilogin.recover true
+```
+
 | 权限节点 | 说明 | 默认 |
 |----------|------|------|
-| `ultilogin.changepassword` | 允许修改密码 | 所有玩家 |
+| `ultilogin.changepassword` | 允许修改密码 | OP（需显式授权普通玩家） |
 | `ultilogin.admin` | 管理员命令权限 | OP |
-| `ultilogin.email` | 邮箱绑定功能 | 所有玩家 |
-| `ultilogin.recover` | 密码找回功能 | 所有玩家 |
+| `ultilogin.email` | 邮箱绑定功能 | OP（需显式授权普通玩家） |
+| `ultilogin.recover` | 密码找回功能 | OP（需显式授权普通玩家） |
 
 ## 配置
 
@@ -249,28 +257,28 @@ messages:
 
 | 键 | 类型 | 默认值 | 说明 / 范围 |
 |---|---|---|---|
-| `login-timeout` | number | `60` | 登录超时时间（单位：秒），超时将被踢出；范围：10-600 |
+| `login-timeout` | number | `60` | 登录超时时间（秒），超时将被踢出；范围：10-600 |
 | `session-enabled` | boolean | `true` | 启用会话功能（同一IP短期内无需重新登录） |
-| `session-timeout` | number | `30` | 会话过期时间（单位：分钟）；范围：1-1440 |
-| `max-register-per-ip` | number | `0` | 同一IP最大注册账户数（0为不限制）；范围：0-100 |
-| `gui-mode.enabled` | boolean | `false` | 启用 GUI 登录模式（数字键盘界面） |
-| `gui-mode.password-length` | number | `4` | GUI 模式密码位数（1-9 数字，推荐 4-6 位）；范围：1-9 |
-| `gui-mode.title-login` | text | `"&6请输入密码"` | GUI 登录界面标题（支持颜色代码） |
-| `gui-mode.title-register` | text | `"&6请设置密码"` | GUI 注册界面标题 |
-| `gui-mode.title-confirm` | text | `"&6请再次输入密码"` | GUI 确认密码界面标题 |
+| `session-timeout` | number | `30` | 会话过期时间（分钟）；范围：1-1440 |
+| `max-register-per-ip` | number | `0` | 同一IP最大注册账户数（0为不限制，默认值）。许多玩家可能共用同一个公网 IP（运营商级 NAT，在中国大陆以及移动网络、校园网中很常见），设为大于 0 的值可能导致正常玩家无法注册。设置后也适用于通过 /panel 在网页上创建的账号；范围：0-100 |
+| `gui-mode.enabled` | boolean | `false` | 启用GUI登录模式（数字键盘界面） |
+| `gui-mode.password-length` | number | `4` | GUI模式密码位数（1-9数字，推荐4-6位）；范围：1-9 |
+| `gui-mode.title-login` | text | `"&6请输入密码"` | GUI登录界面标题 |
+| `gui-mode.title-register` | text | `"&6请设置密码"` | GUI注册界面标题 |
+| `gui-mode.title-confirm` | text | `"&6请再次输入密码"` | GUI确认密码界面标题 |
 | `password.min-length` | number | `6` | 命令模式密码最小长度；范围：4-32 |
 | `password.max-length` | number | `32` | 命令模式密码最大长度；范围：6-128 |
 | `security.max-login-attempts` | number | `5` | 最大登录失败次数（0为不限制）；范围：0-20 |
-| `security.lockout-duration` | number | `900` | 登录失败封禁时长（单位：秒）；范围：60-86400 |
-| `security.lockout-type` | text | `BOTH` | 封禁类型：IP / UUID / BOTH |
+| `security.lockout-duration` | number | `900` | 登录失败封禁时长（秒）；范围：60-86400 |
+| `security.lockout-type` | text | `BOTH` | 封禁类型：IP / UUID / BOTH（默认 BOTH）。IP 按地址计数并封禁；登录成功不会清除失败计数，计数在最近一次失败的 lockout-duration 秒后过期。UUID 按账号计数并封禁，成功清除自身账号计数。BOTH 在同一地址的同一账号失败达到 max-login-attempts 次时封禁该组合，在同一地址失败的不同账号达到 max-login-attempts 个时封禁整个地址；成功只清除自身组合计数，不清除地址集合。集合中每个账号在其最近一次失败的 lockout-duration 秒后过期。未封禁的组合和 UUID 计数不会随时间过期；每项封禁保留自身解锁时间，过期时重置对应计数 |
 | `spawn-location.enabled` | boolean | `false` | 未登录时传送到指定位置 |
-| `spawn-location.world` | text | `world` | 出生点世界名 |
-| `spawn-location.x` | number | `0` | 出生点坐标 |
-| `spawn-location.y` | number | `64` | 范围：-64 到 320 |
-| `spawn-location.z` | number | `0` | 见键名及上方完整示例 |
-| `allowed-commands` | list | `[login, l, register, reg, panel, regs, recover]` | ==================== 其他设置 ====================；未登录时允许执行的命令列表 |
+| `spawn-location.world` | text | `world` | 出生点世界 |
+| `spawn-location.x` | number | `0` | 出生点X |
+| `spawn-location.y` | number | `64` | 出生点Y；范围：-64 至 320 |
+| `spawn-location.z` | number | `0` | 出生点Z |
+| `allowed-commands` | list | `[login, l, register, reg, panel, regs, recover]` | 未登录时允许执行的命令 |
 | `blind-effect` | boolean | `true` | 未登录时给予失明效果 |
-| `ulticloud.enabled` | boolean | `false` | 启用 UltiCloud 集成（允许通过 /panel 命令打开网页面板登录） |
+| `ulticloud.enabled` | boolean | `false` | 启用 UltiCloud 网页面板登录集成 |
 | `messages.register-prompt` | text | `"&e请使用 /register <密码> <确认密码> 注册账号"` | 注册提示（命令模式） |
 | `messages.register-prompt-gui` | text | `"&e请在弹出的界面中设置密码"` | 注册提示（GUI模式） |
 | `messages.login-prompt` | text | `"&e请使用 /login <密码> 登录"` | 登录提示（命令模式） |
@@ -281,16 +289,16 @@ messages:
 | `messages.not-registered` | text | `"&c你还没有注册！请先注册。"` | 未注册 |
 | `messages.already-registered` | text | `"&c你已经注册过了！请直接登录。"` | 已注册 |
 | `messages.password-mismatch` | text | `"&c两次输入的密码不一致！"` | 密码不匹配 |
-| `messages.password-too-short` | text | `"&c密码太短！至少需要 {MIN} 个字符。"` | 密码太短（{MIN} 会被替换为最小长度） |
-| `messages.password-too-long` | text | `"&c密码太长！最多 {MAX} 个字符。"` | 密码太长（{MAX} 会被替换为最大长度） |
+| `messages.password-too-short` | text | `"&c密码太短！至少需要 {MIN} 个字符。"` | 密码太短 |
+| `messages.password-too-long` | text | `"&c密码太长！最多 {MAX} 个字符。"` | 密码太长 |
 | `messages.timeout-kick` | text | `"&c登录超时！请重新连接。"` | 超时踢出 |
-| `messages.account-locked` | text | `"&c登录失败次数过多！请在 {TIME} 秒后重试。"` | 账户被锁定（{TIME} 会被替换为秒数） |
-| `messages.attempts-remaining` | text | `"&c密码错误！剩余尝试次数: {COUNT}"` | 剩余尝试次数（{COUNT} 会被替换为次数） |
-| `messages.gui-password-invalid` | text | `"&c密码必须是 {LENGTH} 位数字！"` | GUI密码无效（{LENGTH} 会被替换为位数） |
-| `messages.admin.password-reset` | text | `"&a已重置玩家 {PLAYER} 的密码为: {PASSWORD}"` | 管理员重置密码成功（{PLAYER}=玩家名, {PASSWORD}=新密码） |
+| `messages.account-locked` | text | `"&c登录失败次数过多！请在 {TIME} 秒后重试。"` | 账户被锁定 |
+| `messages.attempts-remaining` | text | `"&c密码错误！剩余尝试次数: {COUNT}"` | 剩余尝试次数 |
+| `messages.gui-password-invalid` | text | `"&c密码必须是 {LENGTH} 位数字！"` | GUI密码无效 |
+| `messages.admin.password-reset` | text | `"&a已重置玩家 {PLAYER} 的密码为: {PASSWORD}"` | 管理员重置密码成功 |
 | `messages.admin.force-login` | text | `"&a已强制登录玩家 {PLAYER}"` | 管理员强制登录 |
 | `messages.admin.unregister` | text | `"&a已删除玩家 {PLAYER} 的账号"` | 管理员删除账号 |
-| `messages.admin.player-not-found` | text | `"&c找不到玩家 {PLAYER}"` | 玩家不在线 |
+| `messages.admin.player-not-found` | text | `"&c找不到玩家 {PLAYER}"` | 玩家不存在 |
 | `messages.admin.account-not-found` | text | `"&c玩家 {PLAYER} 尚未注册"` | 账号不存在 |
 
 
@@ -346,14 +354,14 @@ reward:
 
 | 键 | 类型 | 默认值 | 说明 / 范围 |
 |---|---|---|---|
-| `verification.code-length` | number | `6` | 验证码长度（范围：4-8） |
-| `verification.code-expiry-seconds` | number | `300` | 验证码有效期（单位：秒，范围：60-1800） |
-| `verification.max-attempts` | number | `3` | 每个验证码最大尝试次数（范围：1-10） |
-| `verification.cooldown-seconds` | number | `60` | 重新发送验证码冷却时间（单位：秒，范围：30-600） |
-| `domain-blacklist` | list | `[10minutemail.com, tempmail.com, guerrillamail.com, mailinator.com, throwaway.email]` | ==================== 邮箱域名黑名单 ====================；被屏蔽的临时邮箱域名 |
-| `max-accounts-per-email` | number | `1` | ==================== 账号限制 ====================；每个邮箱最多绑定账号数（范围：1-10） |
+| `verification.code-length` | number | `6` | 验证码长度；范围：4-8 |
+| `verification.code-expiry-seconds` | number | `300` | 验证码有效期（秒）；范围：60-1800 |
+| `verification.max-attempts` | number | `3` | 每个验证码最大尝试次数；范围：1-10 |
+| `verification.cooldown-seconds` | number | `60` | 重新发送验证码冷却时间（秒）；范围：30-600 |
+| `domain-blacklist` | list | `[10minutemail.com, tempmail.com, guerrillamail.com, mailinator.com, throwaway.email]` | 邮箱域名黑名单（临时邮箱） |
+| `max-accounts-per-email` | number | `1` | 每个邮箱最多绑定账号数；范围：1-10 |
 | `reward.enabled` | boolean | `false` | 启用绑定邮箱奖励 |
-| `reward.commands` | list | `["givemoney %player% 500"]` | 绑定奖励命令（%player% 会被替换为玩家名） |
+| `reward.commands` | list | `["givemoney %player% 500"]` | 绑定奖励命令（%player% 替换为玩家名） |
 
 
 ## 使用教程
@@ -494,10 +502,10 @@ spawn-location:
 ### 权限怎么设置？
 
 - `/login` 和 `/register` 不需要任何权限，所有玩家都能使用
-- `/changepassword` 需要 `ultilogin.changepassword` 权限（默认所有玩家有）
-- `/logadmin` 系列需要 `ultilogin.admin` 权限（默认只有 OP）
-- `/regs` 需要 `ultilogin.email` 权限（默认所有玩家有）
-- `/recover` 需要 `ultilogin.recover` 权限（默认所有玩家有）
+- `/changepassword` 需要 `ultilogin.changepassword` 权限（默认仅 OP 拥有，普通玩家需显式授权）
+- `/logadmin` 系列需要 `ultilogin.admin` 权限（默认仅 OP，普通管理员需显式授权）
+- `/regs` 需要 `ultilogin.email` 权限（默认仅 OP 拥有，普通玩家需显式授权）
+- `/recover` 需要 `ultilogin.recover` 权限（默认仅 OP 拥有，普通玩家需显式授权）
 - 使用权限插件（如 LuckPerms）按需调整
 
 ### GUI 模式和命令模式有什么区别？

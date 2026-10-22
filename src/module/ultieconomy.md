@@ -86,13 +86,24 @@ UltiEconomy 是 UltiTools 框架的经济模块，提供完整的 Vault 经济�
 
 ## 权限
 
+这些权限节点未声明默认授权，默认仅 OP 拥有；普通玩家需显式授权。要使用下表的基础功能，请按需授予 `ultieconomy.money`、`ultieconomy.bank`、`ultieconomy.pay`、`ultieconomy.deposit`、`ultieconomy.withdraw`、`ultieconomy.note`。例如用 LuckPerms 给默认玩家组授权：
+
+```text
+/lp group default permission set ultieconomy.money true
+/lp group default permission set ultieconomy.bank true
+/lp group default permission set ultieconomy.pay true
+/lp group default permission set ultieconomy.deposit true
+/lp group default permission set ultieconomy.withdraw true
+/lp group default permission set ultieconomy.note true
+```
+
 | 权限节点 | 说明 | 默认 |
 |----------|------|------|
-| `ultieconomy.money` | 查看自己的余额 | 所有玩家 |
-| `ultieconomy.bank` | 查看银行存款 | 所有玩家 |
-| `ultieconomy.pay` | 转账给其他玩家 | 所有玩家 |
-| `ultieconomy.deposit` | 存款到银行 | 所有玩家 |
-| `ultieconomy.withdraw` | 从银行取款 | 所有玩家 |
+| `ultieconomy.money` | 查看自己的余额 | OP（需显式授权普通玩家） |
+| `ultieconomy.bank` | 查看银行存款 | OP（需显式授权普通玩家） |
+| `ultieconomy.pay` | 转账给其他玩家 | OP（需显式授权普通玩家） |
+| `ultieconomy.deposit` | 存款到银行 | OP（需显式授权普通玩家） |
+| `ultieconomy.withdraw` | 从银行取款 | OP（需显式授权普通玩家） |
 | `ultieconomy.admin` | 管理员经济操作（give/take/set/check） | OP |
 
 ## 配置
@@ -292,7 +303,7 @@ A: 所有 UltiEconomy 权限节点（permission node，控制谁能用什么命�
 /lp group admin permission set ultieconomy.admin true
 ```
 
-基本权限（money、bank、pay、deposit、withdraw）默认对所有玩家开放，管理权限（admin）默认只有 OP。
+基本权限（money、bank、pay、deposit、withdraw）默认仅 OP 拥有，普通玩家需显式授权，管理权限（admin）默认只有 OP。
 
 **Q: Vault 操作的是哪个余额？**
 
@@ -313,8 +324,6 @@ A: 玩家账户数据存储在 UltiTools-API 配置的数据库中（SQLite、My
 ## 更新日志
 
 ### v3.0.0
-
-移除：旧 Unreleased 记录中的 22 条未被任何代码显示的语言条目已随消息键整理移除；这不是额外的玩家功能变更，也不改变实际显示内容。自定义消息请按下方新语言键规则迁移。
 
 #### 变更
 

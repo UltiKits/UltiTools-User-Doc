@@ -326,8 +326,6 @@ A: After setting `false` and restarting fully, neither `RecipeService` nor `Reci
 
 ### v2.0.0
 
-The unused example-seeding method recorded in Unreleased was removed, deleting a false claim rather than user behavior: fresh configuration still has enabled: true and recipes: {}, and Golden Egg must be added manually; shipping an example remains unimplemented. The README server/Java badge claim was withdrawn at finalization, retaining only the framework 6.3.0+ requirement; the converter co-release requirement is now expressed as the actual framework minimum.
-
 #### Changed
 
 - This version requires UltiTools 6.3.0 or later and declares `api-version: 630` in `plugin.yml`

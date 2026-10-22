@@ -95,10 +95,17 @@ Command aliases: `/recall` and `/callback` are equivalent.
 
 ### Permissions
 
+These permission nodes have no declared default grant and are operators-only by default; grant them explicitly to players. For the basic features below, grant `ultimail.use`, `ultimail.send` as needed. For example, with LuckPerms:
+
+```text
+/lp group default permission set ultimail.use true
+/lp group default permission set ultimail.send true
+```
+
 | Permission | Description | Default |
 |------------|-------------|---------|
-| `ultimail.use` | Use the mail system (inbox, sentbox, read, delete, etc.) | All players |
-| `ultimail.send` | Send mail | All players |
+| `ultimail.use` | Use the mail system (inbox, sentbox, read, delete, etc.) | OP (grant explicitly to players) |
+| `ultimail.send` | Send mail | OP (grant explicitly to players) |
 | `ultimail.admin.sendall` | Broadcast mail to all players | OP |
 | `ultimail.admin.multiattach` | Use multi-item attachment GUI when sending mail (regular players can only attach the main hand item) | OP |
 | `ultimail.recall` | Use the recall feature | OP |
@@ -263,12 +270,12 @@ A: Check the following:
 
 ### Q: Config changes not taking effect?
 
-A: After modifying `plugins/UltiTools/pluginConfig/UltiMail/config/mail.yml`, use `/ul reload` to reload the configuration. No server restart is needed. Note that config values have range limits, and unusable values warn and use the framework-provided valid value without automatically overwriting your file. A new JAR still requires a restart.
+A: After modifying `plugins/UltiTools/pluginConfig/UltiMail/config/mail.yml`, use `/ul reload` to reload the configuration. No server restart is needed. An out-of-range number refuses module loading at startup. During `/ul reload`, the entire change to this configuration file is refused and the old running values are kept, including other settings in the same file. The file is not automatically rewritten. Correct the invalid value, then reload again. A new JAR still requires a restart.
 
 ### Q: How to set up permissions?
 
 A: UltiMail uses the standard Bukkit permission system. You can assign permissions with any permission plugin (such as LuckPerms). For example:
-- Allow all players to use mail: `ultimail.use` and `ultimail.send` (granted by default)
+- Allow all players to use mail: `ultimail.use` and `ultimail.send` (grant explicitly to players)
 - Prevent a player from sending mail: revoke the `ultimail.send` permission
 - Allow admins to broadcast mail: grant `ultimail.admin.sendall`
 

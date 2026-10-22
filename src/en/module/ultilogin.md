@@ -65,12 +65,20 @@ Admin command alias: `/loginadmin`. All admin commands require `ultilogin.admin`
 
 ## Permissions
 
+These permission nodes have no declared default grant and are operators-only by default; grant them explicitly to players. For the basic features below, grant `ultilogin.changepassword`, `ultilogin.email`, `ultilogin.recover` as needed. For example, with LuckPerms:
+
+```text
+/lp group default permission set ultilogin.changepassword true
+/lp group default permission set ultilogin.email true
+/lp group default permission set ultilogin.recover true
+```
+
 | Permission | Description | Default |
 |------------|-------------|---------|
-| `ultilogin.changepassword` | Allow changing password | All players |
+| `ultilogin.changepassword` | Allow changing password | OP (grant explicitly to players) |
 | `ultilogin.admin` | Admin command access | OP only |
-| `ultilogin.email` | Email binding feature | All players |
-| `ultilogin.recover` | Password recovery feature | All players |
+| `ultilogin.email` | Email binding feature | OP (grant explicitly to players) |
+| `ultilogin.recover` | Password recovery feature | OP (grant explicitly to players) |
 
 ## Configuration
 
@@ -249,49 +257,49 @@ messages:
 
 | Key | Type | Default | Description / range |
 |---|---|---|---|
-| `login-timeout` | number | `60` | Login timeout in seconds -- player is kicked if they don't log in within this time；Range: 10-600 |
-| `session-enabled` | boolean | `true` | Enable session feature (same IP can skip login within timeout period) |
-| `session-timeout` | number | `30` | Session expiry time in minutes；Range: 1-1440 |
-| `max-register-per-ip` | number | `0` | Maximum registrations per IP (0 = unlimited)；Range: 0-100 |
-| `gui-mode.enabled` | boolean | `false` | Enable GUI login mode (numeric keypad interface) |
-| `gui-mode.password-length` | number | `4` | GUI mode password length (digits 1-9, recommended 4-6)；Range: 1-9 |
-| `gui-mode.title-login` | text | `"&6Enter Password"` | GUI login screen title (supports color codes) |
-| `gui-mode.title-register` | text | `"&6Set Password"` | GUI registration screen title |
-| `gui-mode.title-confirm` | text | `"&6Confirm Password"` | GUI confirm password screen title |
-| `password.min-length` | number | `6` | Minimum password length for command mode；Range: 4-32 |
-| `password.max-length` | number | `32` | Maximum password length for command mode；Range: 6-128 |
-| `security.max-login-attempts` | number | `5` | Maximum failed login attempts (0 = unlimited)；Range: 0-20 |
-| `security.lockout-duration` | number | `900` | Lockout duration in seconds after too many failures；Range: 60-86400 |
-| `security.lockout-type` | text | `BOTH` | Lockout type: IP / UUID / BOTH |
-| `spawn-location.enabled` | boolean | `false` | Teleport unauthenticated players to a specified location |
-| `spawn-location.world` | text | `world` | Spawn world name |
-| `spawn-location.x` | number | `0` | Spawn coordinates |
-| `spawn-location.y` | number | `64` | Range: -64 to 320 |
-| `spawn-location.z` | number | `0` | See the key and complete example above |
-| `allowed-commands` | list | `[login, l, register, reg, panel, regs, recover]` | ==================== Other Settings ====================；Commands allowed before login |
-| `blind-effect` | boolean | `true` | Apply blindness effect to unauthenticated players |
-| `ulticloud.enabled` | boolean | `false` | Enable UltiCloud integration (allows /panel command for web panel login) |
-| `messages.register-prompt` | text | `"&ePlease use /register <password> <confirm> to register"` | Registration prompt (command mode) |
-| `messages.register-prompt-gui` | text | `"&ePlease set your password in the popup"` | Registration prompt (GUI mode) |
+| `login-timeout` | number | `60` | Login timeout in seconds; players who have not logged in by then are kicked; Range: 10-600 |
+| `session-enabled` | boolean | `true` | Enable sessions (the same IP does not need to log in again for a short time) |
+| `session-timeout` | number | `30` | Session expiry in minutes; Range: 1-1440 |
+| `max-register-per-ip` | number | `0` | Maximum accounts that can be registered from one IP (0 = unlimited, the default). Many players can share one public IP (carrier-grade NAT, common in mainland China and on mobile and campus networks), so a limit above 0 can stop legitimate players from registering. When set, it also applies to accounts created on the web through /panel; Range: 0-100 |
+| `gui-mode.enabled` | boolean | `false` | Enable the GUI login mode (number-pad interface) |
+| `gui-mode.password-length` | number | `4` | Password length in GUI mode (1-9 digits, 4-6 recommended); Range: 1-9 |
+| `gui-mode.title-login` | text | `"&6Enter Password"` | Title of the GUI login screen |
+| `gui-mode.title-register` | text | `"&6Set Password"` | Title of the GUI register screen |
+| `gui-mode.title-confirm` | text | `"&6Confirm Password"` | Title of the GUI confirm-password screen |
+| `password.min-length` | number | `6` | Minimum password length in command mode; Range: 4-32 |
+| `password.max-length` | number | `32` | Maximum password length in command mode; Range: 6-128 |
+| `security.max-login-attempts` | number | `5` | Maximum failed login attempts (0 = unlimited); Range: 0-20 |
+| `security.lockout-duration` | number | `900` | Lockout duration after too many failed logins, in seconds; Range: 60-86400 |
+| `security.lockout-type` | text | `BOTH` | Lockout type: IP / UUID / BOTH (default: BOTH). IP counts and locks per address; a success does not clear its failures, which expire lockout-duration seconds after the latest failure. UUID counts and locks per account; success clears its own account count. BOTH locks one account at one address after max-login-attempts failures, and locks the whole address after max-login-attempts different accounts fail there; success clears only its own pair, not the address collection. Each distinct-account entry expires lockout-duration seconds after its latest failure. Unlocked pair and UUID counts do not expire with time; every lock keeps its unlock time and resets its count when it expires |
+| `spawn-location.enabled` | boolean | `false` | Teleport players who are not logged in to a fixed location |
+| `spawn-location.world` | text | `world` | World of the spawn location |
+| `spawn-location.x` | number | `0` | Spawn location X |
+| `spawn-location.y` | number | `64` | Spawn location Y; Range: -64 to 320 |
+| `spawn-location.z` | number | `0` | Spawn location Z |
+| `allowed-commands` | list | `[login, l, register, reg, panel, regs, recover]` | Commands players may run before logging in |
+| `blind-effect` | boolean | `true` | Give players who are not logged in the blindness effect |
+| `ulticloud.enabled` | boolean | `false` | Enable UltiCloud integration for web panel login |
+| `messages.register-prompt` | text | `"&ePlease use /register <password> <confirm> to register"` | Register prompt (command mode) |
+| `messages.register-prompt-gui` | text | `"&ePlease set your password in the popup"` | Register prompt (GUI mode) |
 | `messages.login-prompt` | text | `"&ePlease use /login <password> to login"` | Login prompt (command mode) |
 | `messages.login-prompt-gui` | text | `"&ePlease enter your password in the popup"` | Login prompt (GUI mode) |
-| `messages.register-success` | text | `"&aRegistration successful! Welcome to the server!"` | Registration success |
-| `messages.login-success` | text | `"&aLogin successful! Welcome back!"` | Login success |
+| `messages.register-success` | text | `"&aRegistration successful! Welcome to the server!"` | Registration succeeded |
+| `messages.login-success` | text | `"&aLogin successful! Welcome back!"` | Login succeeded |
 | `messages.already-logged` | text | `"&eYou are already logged in!"` | Already logged in |
 | `messages.not-registered` | text | `"&cYou are not registered! Please register first."` | Not registered |
 | `messages.already-registered` | text | `"&cYou are already registered! Please login."` | Already registered |
-| `messages.password-mismatch` | text | `"&cPasswords do not match!"` | Password mismatch |
-| `messages.password-too-short` | text | `"&cPassword too short! At least {MIN} characters required."` | Password too short ({MIN} is replaced with the minimum length) |
-| `messages.password-too-long` | text | `"&cPassword too long! Maximum {MAX} characters allowed."` | Password too long ({MAX} is replaced with the maximum length) |
-| `messages.timeout-kick` | text | `"&cLogin timeout! Please reconnect."` | Timeout kick |
-| `messages.account-locked` | text | `"&cToo many failed login attempts! Please try again in {TIME} seconds."` | Account locked ({TIME} is replaced with seconds) |
-| `messages.attempts-remaining` | text | `"&cWrong password! Remaining attempts: {COUNT}"` | Remaining attempts ({COUNT} is replaced with the count) |
-| `messages.gui-password-invalid` | text | `"&cPassword must be {LENGTH} digits!"` | GUI password invalid ({LENGTH} is replaced with the required length) |
-| `messages.admin.password-reset` | text | `"&aReset password for player {PLAYER} to: {PASSWORD}"` | Admin password reset ({PLAYER}=player name, {PASSWORD}=new password) |
-| `messages.admin.force-login` | text | `"&aForce logged in player {PLAYER}"` | Admin force login |
-| `messages.admin.unregister` | text | `"&aDeleted account for player {PLAYER}"` | Admin account deletion |
-| `messages.admin.player-not-found` | text | `"&cPlayer {PLAYER} not found"` | Player not online |
-| `messages.admin.account-not-found` | text | `"&cPlayer {PLAYER} is not registered"` | Account not found |
+| `messages.password-mismatch` | text | `"&cPasswords do not match!"` | Passwords do not match |
+| `messages.password-too-short` | text | `"&cPassword too short! At least {MIN} characters required."` | Password too short |
+| `messages.password-too-long` | text | `"&cPassword too long! Maximum {MAX} characters allowed."` | Password too long |
+| `messages.timeout-kick` | text | `"&cLogin timeout! Please reconnect."` | Kicked after the login timeout |
+| `messages.account-locked` | text | `"&cToo many failed login attempts! Please try again in {TIME} seconds."` | Account locked |
+| `messages.attempts-remaining` | text | `"&cWrong password! Remaining attempts: {COUNT}"` | Remaining attempts |
+| `messages.gui-password-invalid` | text | `"&cPassword must be {LENGTH} digits!"` | GUI password invalid |
+| `messages.admin.password-reset` | text | `"&aReset password for player {PLAYER} to: {PASSWORD}"` | Administrator reset a password successfully |
+| `messages.admin.force-login` | text | `"&aForce logged in player {PLAYER}"` | Administrator forced a login |
+| `messages.admin.unregister` | text | `"&aDeleted account for player {PLAYER}"` | Administrator deleted an account |
+| `messages.admin.player-not-found` | text | `"&cPlayer {PLAYER} not found"` | Player does not exist |
+| `messages.admin.account-not-found` | text | `"&cPlayer {PLAYER} is not registered"` | Account does not exist |
 
 
 ### Email Configuration
@@ -346,14 +354,14 @@ reward:
 
 | Key | Type | Default | Description / range |
 |---|---|---|---|
-| `verification.code-length` | number | `6` | Verification code length (Range: 4-8) |
-| `verification.code-expiry-seconds` | number | `300` | Code expiry time in seconds (Range: 60-1800) |
-| `verification.max-attempts` | number | `3` | Maximum attempts per verification code (Range: 1-10) |
-| `verification.cooldown-seconds` | number | `60` | Cooldown between code requests in seconds (Range: 30-600) |
-| `domain-blacklist` | list | `[10minutemail.com, tempmail.com, guerrillamail.com, mailinator.com, throwaway.email]` | ==================== Email Domain Blacklist ====================；Blocked temporary email domains |
-| `max-accounts-per-email` | number | `1` | ==================== Account Limits ====================；Maximum accounts per email address (Range: 1-10) |
-| `reward.enabled` | boolean | `false` | Enable reward for binding an email |
-| `reward.commands` | list | `["givemoney %player% 500"]` | Commands to execute as reward (%player% is replaced with the player name) |
+| `verification.code-length` | number | `6` | Verification code length (4-8); Range: 4-8 |
+| `verification.code-expiry-seconds` | number | `300` | Verification code validity in seconds; Range: 60-1800 |
+| `verification.max-attempts` | number | `3` | Maximum attempts per verification code; Range: 1-10 |
+| `verification.cooldown-seconds` | number | `60` | Cooldown before a verification code can be sent again, in seconds; Range: 30-600 |
+| `domain-blacklist` | list | `[10minutemail.com, tempmail.com, guerrillamail.com, mailinator.com, throwaway.email]` | Blocked email domains (disposable email services) |
+| `max-accounts-per-email` | number | `1` | Maximum accounts that can be bound to one email address; Range: 1-10 |
+| `reward.enabled` | boolean | `false` | Enable the reward for binding an email address |
+| `reward.commands` | list | `["givemoney %player% 500"]` | Commands run as the binding reward (%player% is replaced with the player name) |
 
 
 ## Usage Tutorials
@@ -495,10 +503,10 @@ After modifying `config/login.yml` or `config/email.yml`, run `/ul reload` or re
 ### How to set up permissions?
 
 - `/login` and `/register` require no permissions -- all players can use them
-- `/changepassword` requires `ultilogin.changepassword` (default: all players)
+- `/changepassword` requires `ultilogin.changepassword` (default: OP; grant explicitly to players)
 - `/logadmin` commands require `ultilogin.admin` (default: OP only)
-- `/regs` requires `ultilogin.email` (default: all players)
-- `/recover` requires `ultilogin.recover` (default: all players)
+- `/regs` requires `ultilogin.email` (default: OP; grant explicitly to players)
+- `/recover` requires `ultilogin.recover` (default: OP; grant explicitly to players)
 - Use a permissions plugin (e.g., LuckPerms) to adjust as needed
 
 ### What is the difference between GUI mode and command mode?
