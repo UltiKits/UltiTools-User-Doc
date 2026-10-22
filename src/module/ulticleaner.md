@@ -437,6 +437,6 @@ UltiCleaner 只有一个权限节点 `ulticleaner.clean`，控制所有 `/clean`
 新增：分批处理，每 tick 清理固定数量的实体，减少卡顿
 新增：清理进度显示（向 OP 发送进度消息）
 新增：区块卸载功能，自动卸载远离玩家的闲置区块
-新增：Paper 服务器兼容优化（异步区块卸载、实体加载检测）
+新增：异步区块卸载与实体加载检测
 新增：四个自定义事件（PreItemCleanEvent、PreEntityCleanEvent、PreChunkUnloadEvent、CleanCompleteEvent）
 新增：所有清理消息可自定义，支持颜色代码

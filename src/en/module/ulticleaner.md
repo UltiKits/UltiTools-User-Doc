@@ -489,6 +489,6 @@ Added: TPS-adaptive threshold adjustment with 1m/5m/15m sample windows
 Added: Batch processing to remove a fixed number of entities per tick, reducing lag
 Added: Cleanup progress display for OPs
 Added: Chunk unload feature to automatically unload idle chunks far from players
-Added: Paper server compatibility optimizations (async chunk unloading, entity load detection)
+Added: async chunk unloading and entity load detection
 Added: Four custom events (PreItemCleanEvent, PreEntityCleanEvent, PreChunkUnloadEvent, CleanCompleteEvent)
 Added: Fully customizable cleanup messages with color code support
