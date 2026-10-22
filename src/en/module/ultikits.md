@@ -257,7 +257,7 @@ After modifying kit YAML files, run `/kits reload` to reload them. After modifyi
 
 1. The basic permission `ultikits.kits.use` is operators-only by default; grant it explicitly to players
 2. Admin permission `ultikits.kits.admin` is OP-only by default
-3. Individual kit permissions are set in each kit's `permission` field -- leave it empty for unrestricted access
+3. Individual kit permissions are set in each kit's `permission` field -- leave it empty to skip the per-kit check; `ultikits.kits.use` is still required
 4. Use a permissions plugin (e.g., LuckPerms) to assign permissions to players or groups
 
 ### Economy system not working?

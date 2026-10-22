@@ -104,6 +104,7 @@ UltiEconomy 是 UltiTools 框架的经济模块，提供完整的 Vault 经济�
 | `ultieconomy.pay` | 转账给其他玩家 | OP（需显式授权普通玩家） |
 | `ultieconomy.deposit` | 存款到银行 | OP（需显式授权普通玩家） |
 | `ultieconomy.withdraw` | 从银行取款 | OP（需显式授权普通玩家） |
+| `ultieconomy.note` | 使用纸币命令（`/note`） | OP（需显式授权普通玩家） |
 | `ultieconomy.admin` | 管理员经济操作（give/take/set/check） | OP |
 
 ## 配置

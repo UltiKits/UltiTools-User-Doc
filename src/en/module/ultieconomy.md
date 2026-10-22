@@ -104,6 +104,7 @@ These permission nodes have no declared default grant and are operators-only by 
 | `ultieconomy.pay` | Transfer cash to other players | OP (grant explicitly to players) |
 | `ultieconomy.deposit` | Deposit cash to bank | OP (grant explicitly to players) |
 | `ultieconomy.withdraw` | Withdraw cash from bank | OP (grant explicitly to players) |
+| `ultieconomy.note` | Use money note commands (`/note`) | OP (grant explicitly to players) |
 | `ultieconomy.admin` | Admin economy operations (give/take/set/check) | OP |
 
 ## Configuration

@@ -373,17 +373,22 @@ emojis:
 
 ## 权限
 
-这些权限节点未声明默认授权，默认仅 OP 拥有；普通玩家需显式授权。要使用下表的基础功能，请按需授予 `ultichat.channel`、`ultichat.emoji`。例如用 LuckPerms 给默认玩家组授权：
+`ultichat.channel` 由模块注册为默认授予所有玩家，`ultichat.admin` 默认仅 OP 拥有。其他固定节点未注册默认授权，默认仅 OP 拥有；普通玩家需显式授权。例如用 LuckPerms 给默认玩家组授予表情权限：
 
 ```text
-/lp group default permission set ultichat.channel true
 /lp group default permission set ultichat.emoji true
+```
+
+要限制 `/ch` 的使用，先对默认玩家组明确拒绝频道命令权限，再给需要使用的组单独授权：
+
+```text
+/lp group default permission set ultichat.channel false
 ```
 
 | 权限节点 | 说明 | 默认 |
 |----------|------|------|
 | `ultichat.admin` | 使用管理命令（`/uchat`） | OP |
-| `ultichat.channel` | 使用频道命令（`/ch`） | OP（需显式授权普通玩家） |
+| `ultichat.channel` | 使用频道命令（`/ch`） | 所有玩家（模块注册为默认授予） |
 | `ultichat.channel.<频道名>` | 加入指定频道（在频道配置中的 `permission` 字段设置） | 视配置 |
 | `ultichat.color` | 在聊天消息中使用 `&` 颜色代码 | OP |
 | `ultichat.emoji` | 在聊天中使用表情短代码 | OP（需显式授权普通玩家） |
