@@ -13,7 +13,7 @@ UltiKits 提供了一套完整的礼包系统。管理员可以在游戏内通�
 在游戏内或控制台执行：
 
 ```
-/upm install UltiKits
+/upm install ultikits.kits
 ```
 
 ### 方法二：手动安装

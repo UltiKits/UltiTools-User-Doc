@@ -13,7 +13,7 @@ UltiKits provides a full-featured kit system. Admins can quickly create kits in-
 Run in-game or from the console:
 
 ```
-/upm install UltiKits
+/upm install ultikits.kits
 ```
 
 ### Method 2: Manual Installation
