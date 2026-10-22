@@ -1,10 +1,10 @@
 # UltiCleaner - High-Performance Server Cleanup Module
 
-Automatically cleans up ground items, mob entities, and idle chunks with smart cleanup, TPS-adaptive thresholds, and batch processing to minimize lag during cleanup operations.
+Automatically cleans up ground items and configured mob entities with smart cleanup, TPS-adaptive thresholds, and batch processing to minimize lag during cleanup operations.
 
 ## Feature Overview
 
-UltiCleaner provides comprehensive automatic cleanup capabilities for Minecraft servers. It periodically cleans up dropped items and configured entity types, broadcasting countdown warnings to all online players before each cleanup cycle. The cleanup process uses batch processing -- removing only a fixed number of entities per tick -- to avoid lag spikes from mass entity removal. The smart cleanup mode automatically triggers additional cleanup when item or mob counts exceed configured thresholds. TPS-adaptive functionality dynamically lowers these thresholds when server performance drops, making cleanup more aggressive during lag. The chunk unload feature frees memory by unloading chunks that are far from all players. Every cleanup operation fires custom Bukkit events that other plugins can listen to and cancel.
+UltiCleaner provides comprehensive automatic cleanup capabilities for Minecraft servers. It periodically cleans up dropped items and configured entity types, broadcasting countdown warnings to all online players before each cleanup cycle. The cleanup process uses batch processing -- removing only a fixed number of entities per tick -- to avoid lag spikes from mass entity removal. The smart cleanup mode automatically triggers additional cleanup when item or mob counts exceed configured thresholds. TPS-adaptive functionality dynamically lowers these thresholds when server performance drops, making cleanup more aggressive during lag. Chunk unloading has been removed; the server engine manages idle chunks. Every cleanup operation fires custom Bukkit events that other plugins can listen to and cancel.
 
 ## Installation
 
@@ -18,11 +18,11 @@ There are two ways to install:
 
 **Method 2: Manual installation**
 
-1. Download `UltiCleaner.jar`
+1. Install UltiTools-API 6.3.0 or later first, then download `UltiCleaner-2.0.0.jar`
 2. Place the JAR file in your server's `plugins/UltiTools/plugins/` directory
 3. Restart the server
 
-After installation, the configuration file will be auto-generated at `plugins/UltiTools/UltiCleaner/config/cleaner.yml`.
+After installation, the configuration file will be auto-generated at `plugins/UltiTools/pluginConfig/UltiCleaner/config/cleaner.yml`.
 
 ## Quick Start
 
@@ -48,20 +48,19 @@ Save and run `/ul reload` to apply.
 
 ## Commands
 
-All commands use the aliases `/clean`, `/cleaner`, `/clear`. The permission node for all commands is `ulticleaner.clean`. Both players and console can execute them.
+All commands use the aliases `/clean`, `/cleaner`. The permission node for all commands is `ulticleaner.clean`. Both players and console can execute them.
 
 | Command | Description | Example |
 |---------|-------------|---------|
 | `/clean items` | Immediately clean ground items in all worlds | `/clean items` |
 | `/clean entities` | Immediately clean configured entity types in all worlds | `/clean entities` |
 | `/clean all` | Clean both items and entities | `/clean all` |
-| `/clean chunks` | Unload idle chunks far from players (must be enabled in config) | `/clean chunks` |
-| `/clean check` | Show server entity stats: ground item count, cleanable mob count, total entities, loaded chunks, unloadable chunks, current TPS | `/clean check` |
+| `/clean check` | Show server entity stats: ground item count, cleanable mob count, total entities, loaded chunks, current TPS | `/clean check` |
 | `/clean status` | Show cleanup status: next item/entity cleanup countdown, whether cleaning is in progress, TPS status | `/clean status` |
 
 ## Configuration
 
-Config file path: `plugins/UltiTools/UltiCleaner/config/cleaner.yml`
+Config file path: `plugins/UltiTools/pluginConfig/UltiCleaner/config/cleaner.yml`
 
 ```yaml
 # ============ Item Cleanup ============
@@ -137,16 +136,8 @@ tps:
   low-reduction: 30                          # Threshold reduction percentage when TPS is low (range: 0-80)
   critical-reduction: 50                     # Threshold reduction percentage when TPS is critical (range: 0-90)
 
-# ============ Chunk Unload ============
-chunk:
-  enabled: false                             # Enable chunk unloading (unloads chunks far from players to free memory)
-  max-distance: 20                           # Maximum chunk distance (range: 5-50, in chunk units, chunks beyond this are unloaded)
-  batch-size: 5                              # Chunks unloaded per tick (range: 1-20)
-  timeout: 5                                 # Async unload timeout (seconds, range: 1-30)
-
 # ============ Messages ============
 messages:
-  prefix: "&a[Cleaner]"                     # Message prefix
   warn: "&c[Cleaner] &fGround items will be cleaned in &e{TIME} &fseconds!"
   entity-warn: "&c[Cleaner] &fEntities will be cleaned in &e{TIME} &fseconds!"
   item-cleaned: "&a[Cleaner] &fCleaned &e{COUNT} &fground items!"
@@ -165,6 +156,12 @@ messages:
 | `{CURRENT}` | Current number cleaned so far |
 | `{TOTAL}` | Total number to be cleaned |
 
+The messages above illustrate English built-in text; the other setting keys and values match the Chinese page. The seven broadcasts and framework-generated comments follow the server's `language`, keeping text and comments you edited. Apply a language change with a full `/ul reload` or restart. Edit broadcasts in this config, not extracted language files. Do not overwrite your file with this complete example.
+
+Reload now rereads the file, refreshes language, rebuilds caches and resets countdowns. `warn-times` entries are whole seconds; invalid entries are named and skipped. An empty or entirely unreadable list uses `[60, 30, 10, 5, 3, 2, 1]`, rather than disabling warnings. To disable entity cleanup, use `entity.enabled: false`, not `entity.types: []`: an empty type list warns and uses the default mob types. A nonempty list containing only invalid types warns for each and cleans no entities. Item whitelists accept lower-case material names such as `diamond`; unknown materials warn and protect nothing.
+
+`messages.prefix` is no longer read; change the prefix inside each message instead. That leftover key and the four `chunk.*` keys each warn at startup and reload and may be deleted individually. Uninstalling UltiCleaner stops active batches without broadcasting completion. `/clean all` now runs both cleanup halves, while manual cleanup still refuses when either is already running. `/clean status` shows the actual configured TPS reductions.
+
 ## Usage Tutorials
 
 ### Scenario 1: Small Survival Server (10-20 players)
@@ -177,8 +174,6 @@ item:
   ignore-recent: 60    # Ignore items dropped in the last minute
 smart:
   enabled: false       # Disable smart cleanup
-chunk:
-  enabled: false       # Disable chunk unloading
 ```
 
 ### Scenario 2: Medium Server (around 50 players)
@@ -211,9 +206,6 @@ smart:
 tps:
   adaptive-enabled: true
   low-threshold: 19.0  # More sensitive TPS detection
-chunk:
-  enabled: true
-  max-distance: 15     # More aggressive chunk unloading
 batch:
   size: 200
   show-progress: true  # Show progress to OPs for monitoring
@@ -258,13 +250,12 @@ When TPS recovers, thresholds return to their normal values automatically.
 
 ## Developer API
 
-UltiCleaner provides four custom events that other plugins can listen to and interact with:
+UltiCleaner provides three custom events that other plugins can listen to and interact with:
 
 | Event | When Fired | Cancellable |
 |-------|-----------|-------------|
 | `PreItemCleanEvent` | Before item cleanup starts | Yes |
 | `PreEntityCleanEvent` | Before entity cleanup starts | Yes |
-| `PreChunkUnloadEvent` | Before a chunk is unloaded | Yes |
 | `CleanCompleteEvent` | After cleanup completes (async) | No |
 
 The `getItemUuids()` / `getEntityUuids()` lists returned by `PreItemCleanEvent` and `PreEntityCleanEvent` are mutable -- you can remove specific entity UUIDs to prevent them from being cleaned.
@@ -275,7 +266,7 @@ The `getItemUuids()` / `getEntityUuids()` lists returned by `PreItemCleanEvent` 
 
 Check these points:
 - Make sure the JAR file is in `plugins/UltiTools/plugins/` (not the `plugins/` root directory)
-- Confirm that UltiTools-API 6.2.0 or higher is installed
+- Confirm that UltiTools-API 6.3.0 or higher is installed
 - Restart the server fully (not just `/ul reload` -- new modules require a full restart)
 - Check the console for the "UltiCleaner has been enabled!" log message
 
@@ -297,9 +288,9 @@ Regular players typically don't need this permission -- only admins need to manu
 
 Reduce the `batch.size` value. The default is 50 entities per tick. If your server hardware is limited, try 20 or 30. Smaller batches spread the cleanup over more ticks, reducing per-tick load at the cost of longer total cleanup time.
 
-### 5. Is the chunk unload feature safe?
+### 5. Where did chunk settings and /clear go?
 
-Chunk unloading performs multiple safety checks before executing: it won't unload force-loaded chunks, chunks containing players, or chunks that are in use. Paper servers also check whether entities are loaded in the chunk. If you're still concerned, test on a development server first or only enable it for worlds with no players.
+Chunk unloading was removed entirely; the server manages idle chunks itself. `/clean chunks` no longer exists. The four old `chunk.*` settings only cause deprecation warnings and can be removed. `/clear` belongs to vanilla again, so use `/clean` or `/cleaner` for this module. The loaded-chunk count in `/clean check` is only a statistic, not a remaining chunk-cleanup feature.
 
 ### 6. What's the difference between smart cleanup and scheduled cleanup?
 
@@ -310,6 +301,177 @@ Scheduled cleanup runs at fixed intervals regardless of entity count. Smart clea
 Other plugins can listen to `PreItemCleanEvent` or `PreEntityCleanEvent` and call `setCancelled(true)` to prevent that cleanup cycle. They can also remove specific entity UUIDs from the event's UUID list to partially prevent cleanup.
 
 ## Changelog
+
+### v2.0.0
+
+#### Added
+
+- On startup, and again on every `/ul reload`, this module now checks your own `config/cleaner.yml`
+  for keys this version no longer reads and logs one warning per leftover, naming the module, the
+  file and the key, and saying where the setting went. Deleting a key from the module stops a
+  *fresh* file being written with it but does nothing to the file you already have — the framework
+  only ever writes a default for a key that is missing — so without this warning an edited value
+  would simply stop meaning anything, silently. The keys checked for are `messages.prefix`,
+  `chunk.enabled`, `chunk.max-distance`, `chunk.batch-size` and `chunk.timeout`; delete them from
+  the file to silence it.
+
+#### Changed
+
+- This version requires UltiTools 6.3.0 or later and declares `api-version: 630` in `plugin.yml`
+  (the released 1.0.0 declared `620`). An older framework now refuses the module before its start-up runs,
+  with a warning that the UltiTools version is outdated; the refusal names the module by its `plugin.yml`
+  `name:`, here `UltiCleaner` (UltiKits/UltiTools-Reborn#544).
+
+- `plugin.yml` now declares `identify-string: ulticleaner`, the key of this module's entry in the
+  UltiCloud catalogue. The framework's update check and `/upm update` skip a module that does not
+  declare it, so this module now takes part in both: a later published version carrying the same key
+  is reported at startup and can be installed with `/upm update` (UltiKits/UltiTools-Reborn#474).
+
+- Message settings in `config/cleaner.yml` — the seven broadcast messages (`messages.warn`,
+  `messages.entity-warn`, `messages.item-cleaned`, `messages.entity-cleaned`, `messages.smart-triggered`,
+  `messages.clean-progress`, `messages.clean-cancelled`) — are written in the server's language when the
+  module starts, and the file is what the module broadcasts (for example `messages.item-cleaned:
+  '&a[Cleaner] &fCleaned &e{COUNT} &fground items!'` under `language: en`); previously they were fixed
+  Chinese text, so `language: en` had no effect on any cleanup broadcast. A setting that is still built-in
+  text — in any language, or a default an earlier version shipped — follows `language`: it is rewritten
+  when the module starts or after `/ul reload`. A setting you edited is kept. To keep a built-in text but
+  stop it following `language`, change at least one character (UltiKits/UltiCleaner#17). The text written is this module's built-in text: edit these settings in `config/cleaner.yml`; an edit of the extracted
+  language file does not change them (earlier versions never read them from the language file either).
+
+#### Fixed
+
+- The comments above the keys of `config/cleaner.yml` now come from the module's language files: a
+  server set to `language: en` writes English comments on a fresh install (earlier versions wrote
+  Chinese-only comments in every language). The comments the framework wrote on these 33 keys, the Chinese
+  ones earlier versions wrote included, switch to the server's language at the next start, and after you
+  change `language` and run a bare `/ul reload`; a comment you wrote yourself is kept as you wrote it
+  (UltiKits/UltiTools-Reborn#611). On `/ul reload` this module writes `config/cleaner.yml` only to re-render a
+  broadcast message that still holds built-in text in another language, as every message does after a
+  `language` change. That write changes only those message lines: a value the framework could not read (for
+  example `interval: 3O0`), a key you deleted and your own comments stay as you left them
+  (UltiKits/UltiTools-Reborn#611). A reload that finds no such message and no framework comment in another
+  language writes nothing to the file, which is the usual case when `language` did not change
+  (UltiKits/UltiCleaner#33).
+
+- `item.whitelist` entries are now read the way the server reads a material name, so a lower-case
+  entry such as `diamond` protects diamonds. An entry that names no material (for example a typo) is
+  ignored and named in a console warning at start-up and on `/ul reload`; before, it was accepted
+  silently and protected nothing.
+
+- `/upm uninstall UltiCleaner` now stops a cleanup that is still removing items or entities. The
+  batch task belonged to the UltiTools plugin, so it kept deleting entities for a module that had
+  already been unloaded until it reached the end of its list. A cleanup stopped this way broadcasts
+  nothing (UltiKits/UltiCleaner#26).
+
+- Countdown warnings before a scheduled cleanup ("Ground items will be cleaned in T seconds!" and the
+  entity line) are broadcast again. Earlier framework versions read each `item.warn-times` / `entity.warn-times`
+  entry from `config/cleaner.yml` as text, and the module compared it with a number, so no warning was
+  ever sent once the file existed. Each entry is now read as a whole number of seconds, including a number
+  an older file stored as text. An entry that cannot be read as one (for example `abc` or `2.5`) is skipped
+  with a console warning naming the key, the entry's position and its value, and the other entries are used.
+  A list that is empty, or in which no entry could be read, is not used: the default
+  `[60, 30, 10, 5, 3, 2, 1]` applies and start-up and every `/ul reload` log a warning naming the key and
+  the default; before, such a list silently switched every countdown warning off (UltiKits/UltiCleaner#22,
+  UltiKits/UltiCleaner#34).
+
+- `entity.types: []` in `config/cleaner.yml` no longer switches entity cleanup off without a word. The
+  framework's `@NotEmpty` now covers lists, so an empty `entity.types` runs on the declared default types
+  (`ZOMBIE`, `SKELETON`, `CREEPER`, `SPIDER`, `CAVE_SPIDER`, `ENDERMAN`, `WITCH`, `SLIME`, `PHANTOM`) with one
+  warning from the framework naming the key, the empty value and the default; the file is not changed. The
+  two `warn-times` lists keep this module's own empty-list warning. A list that holds only names that are no
+  entity type is not empty: each unknown name is warned about and nothing is cleaned
+  (UltiKits/UltiCleaner#34).
+
+- The warning about a key this version no longer reads now prints the configuration file's path exactly
+  as it is. A path containing `{KEY}` or `{REASON}` was rewritten by the placeholders filled after it.
+
+- For plugin authors: `/clean all` now fires one `CleanCompleteEvent` of type `ALL` after both of its
+  halves have finished, with the combined count and trigger `MANUAL`. A half with a non-empty cleanup
+  list that is not cancelled still fires its own `ITEMS` or `ENTITIES` event first, as before; an empty
+  or cancelled half does not fire that component event. `CleanType.ALL` was declared but never fired
+  (UltiKits/UltiCleaner#16).
+
+- `/clean all` now removes entities as well as ground items. The item cleanup and the entity cleanup
+  shared one "cleaning in progress" flag, so an entity cleanup started in the same tick as an item
+  cleanup was skipped without a message while `/clean all` still reported the entities as started.
+  The same collision dropped the mob cleanup when smart cleanup exceeded both thresholds at once, and
+  dropped one of the two scheduled cleanups whenever their countdowns reached zero in the same second.
+  Each cleanup now has its own flag; `/clean items`, `/clean entities` and `/clean all` still refuse
+  while any cleanup is running (UltiKits/UltiCleaner#15).
+
+- `language: en` now applies to everything `/clean` prints (the started, in-progress, `check`,
+  `status` and help lines) and to the command description, which were fixed Chinese text in every
+  language although the language files already held English text for most of them
+  (UltiKits/UltiCleaner#17). `language: zh` now also applies to the console lines that were fixed
+  English text: the detected-server and TPS-monitor start-up lines, an unknown entity type in
+  `entity.types`, the TPS band shown by `/clean check` and `/clean status` (`Normal`, `Low`,
+  `Critical`), and the warning about a key this version no longer reads. Their English wording is
+  unchanged.
+
+- `/ul reload UltiCleaner` (and a bare `/ul reload`) now re-reads `config/cleaner.yml` and
+  refreshes the module's language files before the module rebuilds the cleaner service's caches and
+  resets its cleanup countdowns. Previously this module replaced the framework's reload method, so
+  the file was never re-read and an edited value such as `item.interval` did not take effect until a
+  restart (UltiKits/UltiCleaner#14).
+
+- After `/upm uninstall UltiCleaner`, the module's `/clean` command is now really removed.
+  Previously this module replaced the framework's unload method with one that only logged a line, so
+  the command stayed active until the server restarted (UltiKits/UltiCleaner#14).
+
+- `/clean status` now names the TPS threshold reduction actually configured in
+  `tps.low-reduction` and `tps.critical-reduction`. Previously the warning line printed a fixed
+  "30%" and "50%" whatever those keys were set to, so an operator who had raised either one was
+  shown a number the module was not applying (UltiKits/UltiCleaner#21).
+
+#### Removed
+
+- Removed the `clear` alias of `/clean`. It took over vanilla's `/clear` command, so `/clear <player>`
+  printed this module's help instead of clearing an inventory. `/clear` is vanilla's again; use
+  `/clean` or `/cleaner` for this module (UltiKits/UltiCleaner#30).
+
+- For plugin authors: removed `CleanCompleteEvent.CleanType.CHUNKS`. Nothing could fire it once the
+  chunk-unload feature was removed, so a listener's `CHUNKS` branch could never run. A plugin that
+  names the constant must drop that branch before it compiles against this version
+  (UltiKits/UltiCleaner#16).
+
+- Five language-file entries that no code ever displayed were removed from `lang/en.yml` and
+  `lang/zh.yml`: `smart_clean_items`, `smart_clean_mobs`, `clean_complete`, `tps_low_warning` and
+  `tps_critical_warning`. No message changes; a copy of them in an already-extracted language file
+  is simply not read.
+
+- Removed the module's own "UltiCleaner has been disabled!" console line and its
+  `cleaner_disabled` language key. The unload override that printed it did no other work, so it
+  was deleted rather than moved to the new unload hook.
+
+- **Removed the chunk-unloading feature entirely.** The server engine already unloads idle chunks
+  by itself, so this feature could only ever reach the chunks the server deliberately keeps
+  resident. Measured with no players online, three worlds held 147 loaded chunks — exactly the
+  49-chunk spawn-keep area of each — and the module's own gate rejected all 147. The deprecated
+  platform check the gate was built on says the same thing in its own words: chunks "will not be
+  loaded for more than 1 tick unless they are in use". Removing the feature is not a rejection of
+  it; `UltiKits/UltiCleaner#27` records the measurements and the conditions for bringing it back
+  (UltiKits/UltiCleaner#23, UltiKits/UltiCleaner#20). What went, item by item:
+  - the command `/clean chunks`, which no longer exists and now prints the usual unknown-format
+    help instead;
+  - the scheduled chunk-unload task that ran every 30 seconds;
+  - the configuration keys `chunk.enabled`, `chunk.max-distance`, `chunk.batch-size` and
+    `chunk.timeout` in `config/cleaner.yml` — these four keys still sit in your existing file and
+    are now ignored (the module logs one warning per leftover key at startup);
+  - the `PreChunkUnloadEvent` extension point, which only this feature ever fired;
+  - the "unloadable chunks" line of `/clean check`, and the `chunk_unloaded`, `cmd_help_chunks`
+    and `stats_chunks_unloadable` language keys.
+  `/clean check`'s "loaded chunks" line stays: it is a plain server statistic, not a readout of
+  this feature.
+
+- Removed the configuration key `messages.prefix` from `config/cleaner.yml`. No code ever read it, so
+  no message was ever prefixed from it and nothing you see changes. The prefix in a cleanup broadcast
+  is part of that broadcast's own text — the seven other `messages.*` keys in the same file, each
+  still read from the configuration and each carrying its own tag (`[Cleaner]` in the English
+  built-in text, `[清理]` in the Chinese) — so to change a prefix, edit the message it belongs to.
+  Those broadcasts now follow the server's `language` setting, as described under Changed above
+  (UltiKits/UltiCleaner#17). The removed key stays in your existing file and is now ignored; the
+  module logs one warning about it at startup (UltiKits/UltiCleaner#18).
+
 
 ### v1.0.0 (2026-02-13)
 
@@ -327,6 +489,6 @@ Added: TPS-adaptive threshold adjustment with 1m/5m/15m sample windows
 Added: Batch processing to remove a fixed number of entities per tick, reducing lag
 Added: Cleanup progress display for OPs
 Added: Chunk unload feature to automatically unload idle chunks far from players
-Added: Paper server compatibility optimizations (async chunk unloading, entity load detection)
+Added: async chunk unloading and entity load detection
 Added: Four custom events (PreItemCleanEvent, PreEntityCleanEvent, PreChunkUnloadEvent, CleanCompleteEvent)
 Added: Fully customizable cleanup messages with color code support
