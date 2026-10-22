@@ -714,6 +714,14 @@ Session auto-login also counts as logged in in game. On an offline-mode server s
 - The `email_bind_reward` and `panel_auth_success` language entries. No code ever read them, so
   removing them changes nothing players see.
 
+- The module's own `UltiLogin 已禁用！` ("UltiLogin disabled!") console line on unload and its own
+  `UltiLogin 配置已重载！` ("UltiLogin configuration reloaded!") console line on `/ul reload UltiLogin`
+  (both printed in Chinese under either `language` setting), and the never-read `login_disabled` and
+  `login_reloaded` language keys that described them. UltiTools 6.3.0 logs one reload line per module
+  (`Module 'UltiLogin' reloaded.`). Reloading still re-reads `login.yml` into the running module,
+  exactly as before: that was already done by the framework's reload method, which this module's
+  override called first (UltiKits/UltiLogin#29).
+
 - The `messages.wrong-password` setting in `config/login.yml`. It never took effect in any version:
   no code read it, so editing it never changed what a player saw. The wrong-password reply that
   now exists (see `### Fixed`) takes its text from this module's language file instead — entry
@@ -805,7 +813,6 @@ Session auto-login also counts as logged in in game. On an offline-mode server s
   off the vehicle one tick after rejoining (the vehicle stays where it is), a player whose login is
   revoked while riding is dismounted, and a moving minecart or boat drops such a passenger. After
   logging in they can get back in (UltiKits/UltiLogin#41).
-
 
 ### v1.0.0 (2026-02-15)
 

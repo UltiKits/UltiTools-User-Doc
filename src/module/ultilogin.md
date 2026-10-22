@@ -671,14 +671,6 @@ spawn-location:
 
 - 移除 `email_bind_reward` 与 `panel_auth_success` 两个语言条目。从未有代码读取它们，因此移除它们不会改变玩家看到的任何内容。
 
-- The module's own `UltiLogin 已禁用！` ("UltiLogin disabled!") console line on unload and its own
-  `UltiLogin 配置已重载！` ("UltiLogin configuration reloaded!") console line on `/ul reload UltiLogin`
-  (both printed in Chinese under either `language` setting), and the never-read `login_disabled` and
-  `login_reloaded` language keys that described them. UltiTools 6.3.0 logs one reload line per module
-  (`Module 'UltiLogin' reloaded.`). Reloading still re-reads `login.yml` into the running module,
-  exactly as before: that was already done by the framework's reload method, which this module's
-  override called first (UltiKits/UltiLogin#29).
-
 - 移除本模块卸载时输出的"UltiLogin 已禁用！"控制台行、`/ul reload UltiLogin` 时输出的
   "UltiLogin 配置已重载！"控制台行，以及未被读取的 `login_disabled`、`login_reloaded` 语言键。
   UltiTools 6.3.0 会为每个模块输出一行重载日志（`Module 'UltiLogin' reloaded.`）。重载仍会像以前一样把
@@ -746,7 +738,6 @@ spawn-location:
   因为只有操控载具的玩家会被拦住；坐在行驶中的矿车里下线的玩家重进时会被放回矿车并继续移动。现在未登录玩家不乘坐任何载具：
   上载具被拒绝，坐着下线的玩家重进后一刻会被请下载具（载具留在原处），登录被撤销时会下载具，行驶中的矿车或船会让这样的乘客下车。
   登录后可以重新上载具（UltiKits/UltiLogin#41）。
-
 
 ### v1.0.0 (2026-02-15)
 
