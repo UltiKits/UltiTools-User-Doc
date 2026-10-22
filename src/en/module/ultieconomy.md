@@ -148,7 +148,7 @@ tax:
 | `interest.enabled` | boolean | false | Pay interest; an existing file keeps its own value |
 | `interest.rate` | decimal | 0.03 | Interest rate (interest = bank balance x rate) |
 | `interest.interval` | integer | 1800 | Seconds between each interest distribution |
-| `interest.max-interest` | decimal | 10000.0 | Cap on interest per distribution |
+| `interest.max-interest` | decimal | 10000.0 | Only positive values cap each payment; 0 and -1 mean no per-payment cap |
 | `leaderboard.update-interval` | integer | 60 | Seconds between leaderboard cache refreshes |
 | `tax.enabled` | boolean | true | Master taxation switch |
 | `tax.transaction-tax.enabled` | boolean | true | Transfer tax switch |
@@ -234,7 +234,7 @@ interest:
 
 Run `/ul reload` after saving to apply the changes.
 
-The formula is: `interest = bank balance x rate`, capped at `max-interest`. For example, with 500,000 in the bank at 3%, the calculated interest is 15,000, but the cap limits it to 10,000.
+The formula is: `interest = bank balance x rate`, capped per payment only when `max-interest` is positive. Both 0 and -1 mean no per-payment cap; the bank balance maximum still applies. For example, with 500,000 in the bank at 3%, the calculated interest is 15,000, but the cap limits it to 10,000.
 
 ### Scenario 4: Admin Fixing Player Balances
 
@@ -300,7 +300,7 @@ A: The Vault API only operates on the **cash balance**. The bank is a private Ul
 
 **Q: How does interest work?**
 
-A: Only `interest.enabled: true` pays interest; new installations default to false. When enabled, configured intervals (30 minutes by default) pay positive bank balances, including offline players. The primary account wallet is paid once; other bank-enabled currencies are paid separately. Online players receive a green notification message. Formula: bank balance x rate, capped at the per-distribution maximum. To disable: set `interest.enabled: false` in the config.
+A: Only `interest.enabled: true` pays interest; new installations default to false. When enabled, configured intervals (30 minutes by default) pay positive bank balances, including offline players. The primary account wallet is paid once; other bank-enabled currencies are paid separately. Online players receive a green notification message. Formula: bank balance x rate, capped per payment only when `interest.max-interest` is positive. Both 0 and -1 mean no per-payment cap; the bank balance maximum still applies. To disable: set `interest.enabled: false` in the config.
 
 **Q: Are transfers safe?**
 
