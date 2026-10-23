@@ -8,23 +8,13 @@ UltiBot is discontinued and its repository is archived. This page is a historica
 
 ## Installation
 
-There are two ways to install:
-
-**Option 1: Via UltiTools Plugin Manager (Recommended)**
-
-Run in the server console or in-game:
-
-```
-/upm install UltiBot
-```
-
-**Option 2: Manual Installation**
+The following manual installation steps are historical only. UltiBot is discontinued; installing it through UPM is no longer recommended.
 
 1. Download the `UltiBot.jar` file
 2. Place the JAR file into the `plugins/UltiTools/plugins/` directory
 3. Restart the server
 
-After installation, the configuration file is automatically generated at `plugins/UltiTools/UltiBot/config.yml`.
+Historically, the module generated its configuration file at `plugins/UltiTools/pluginConfig/UltiBot/config.yml`.
 
 ## Quick Start
 
@@ -128,7 +118,7 @@ These commands are primarily for developers testing plugin interactions:
 
 ## Configuration
 
-Configuration file path: `plugins/UltiTools/UltiBot/config.yml`
+Configuration file path: `plugins/UltiTools/pluginConfig/UltiBot/config.yml`
 
 ```yaml
 # Maximum bots each player can spawn (range: 1-100)
@@ -271,7 +261,7 @@ A: Check the following:
 
 **Q: Config changes not taking effect?**
 
-A: After modifying `plugins/UltiTools/UltiBot/config.yml`, use `/bot reload` to reload the configuration, or `/ul reload`.
+A: After modifying `plugins/UltiTools/pluginConfig/UltiBot/config.yml`, use `/bot reload` to reload the configuration, or `/ul reload`.
 
 **Q: How to set up permissions?**
 

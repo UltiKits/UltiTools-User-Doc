@@ -21,11 +21,11 @@ UltiTools 6 采用模块化架构，所有功能以独立模块的形式提供�
 | [UltiCleaner](./ulticleaner) | 智能清道夫（定时/智能清理、TPS自适应） |
 | [UltiRecipe](./ultirecipe) | 自定义合成（YAML配置自定义合成配方） |
 | [UltiEconomy](./ultieconomy) | 经济系统（Vault双钱包、银行利息、财富排行榜） |
-| [UltiBot](./ultibot) | 假人机器人（NPC生成、动作控制、宏录制、皮肤） |
+| [UltiBot（已停止维护）](./ultibot) | 假人机器人（NPC生成、动作控制、宏录制、皮肤） |
 
 ## 安装方式
 
-所有模块均支持两种安装方式：
+仍在维护的模块支持以下两种安装方式（上面的 UltiBot 已停止维护，仅供历史参考）：
 
 **方式一：通过 UPM 安装（推荐）**
 

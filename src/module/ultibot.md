@@ -8,23 +8,13 @@ UltiBot 已停止维护，仓库已归档。本页仅供历史参考，不是仍
 
 ## 安装方式
 
-有两种安装方式：
-
-**方式一：通过 UPM 安装（推荐）**
-
-在服务器控制台或游戏内执行：
-
-```
-/upm install UltiBot
-```
-
-**方式二：手动安装**
+以下手动安装步骤仅供历史参考。UltiBot 已停止维护，不再推荐通过 UPM 安装。
 
 1. 下载 `UltiBot.jar` 文件
 2. 放入服务器的 `plugins/UltiTools/plugins/` 目录
 3. 重启服务器
 
-安装后会自动在 `plugins/UltiTools/UltiBot/config.yml` 生成配置文件。
+历史版本安装后会在 `plugins/UltiTools/pluginConfig/UltiBot/config.yml` 生成配置文件。
 
 ## 快速上手
 
@@ -130,7 +120,7 @@ UltiBot 已停止维护，仓库已归档。本页仅供历史参考，不是仍
 
 ## 配置
 
-配置文件路径：`plugins/UltiTools/UltiBot/config.yml`
+配置文件路径：`plugins/UltiTools/pluginConfig/UltiBot/config.yml`
 
 ```yaml
 # 每个玩家最多可以生成的机器人数量（范围：1-100）
@@ -273,7 +263,7 @@ A: 检查以下几项：
 
 **Q: 改了配置文件没效果？**
 
-A: 修改 `plugins/UltiTools/UltiBot/config.yml` 后，可以用 `/bot reload` 重新加载配置，或者用 `/ul reload`。
+A: 修改 `plugins/UltiTools/pluginConfig/UltiBot/config.yml` 后，可以用 `/bot reload` 重新加载配置，或者用 `/ul reload`。
 
 **Q: 权限怎么设置？**
 

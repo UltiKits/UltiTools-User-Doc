@@ -9,6 +9,7 @@ plugins/UltiTools/
 │   ├── UltiEssentials/
 │   ├── UltiChat/
 │   └── ...
+├── lang/              官方语言文件（zh.json、en.json）及自定义副本
 ├── sqliteDB/          SQLite 数据库文件（使用 sqlite 存储时）
 ├── backups/           UltiBackup 模块的备份文件
 ├── config.yml         核心配置文件

@@ -21,11 +21,11 @@ UltiTools 6 uses a modular architecture where all features are provided as indep
 | [UltiCleaner](./ulticleaner) | Auto cleaner (timed/smart cleanup, TPS adaptive) |
 | [UltiRecipe](./ultirecipe) | Custom recipes (YAML-configured crafting recipes) |
 | [UltiEconomy](./ultieconomy) | Economy system (Vault dual-wallet, bank interest, wealth leaderboard) |
-| [UltiBot](./ultibot) | Fake player bots (NPC spawning, actions, macro recording, skins) |
+| [UltiBot (discontinued)](./ultibot) | Fake player bots (NPC spawning, actions, macro recording, skins) |
 
 ## Installation
 
-All modules support two installation methods:
+Maintained modules support two installation methods (the discontinued UltiBot entry above is historical only):
 
 **Method 1: Install via UPM (Recommended)**
 

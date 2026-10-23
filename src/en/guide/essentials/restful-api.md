@@ -19,18 +19,13 @@ Panel URL: [panel.ultikits.com](https://panel.ultikits.com)
 
 To connect your Minecraft server to the panel:
 
-1. Register an account on the panel
-2. Add your credentials to `plugins/UltiTools/config.yml`:
+Run this in the **server console** (not in game):
 
-```yaml
-account:
-  username: "your_username"
-  password: "your_password"
+```
+ulticloud login
 ```
 
-3. Restart the server
-
-The server will automatically connect to the panel via WebSocket. Once connected, you can see and manage your server from the panel.
+Open the printed magic link in your browser, sign in with your UltiKits account and approve the server link. Use `ulticloud status` to check the link state and `ulticloud logout` to remove it. Credentials are stored in `.ultikits/credentials.json` under the server root. Do not edit or share that file; do not put your account password in `config.yml`.
 
 See [Account Binding](/en/guide/essentials/account-bind).
 

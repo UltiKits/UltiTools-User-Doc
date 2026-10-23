@@ -20,7 +20,7 @@ const sidebarModuleEN: DefaultTheme.SidebarItem[] = [
             {text: 'UltiCleaner — Auto Cleaner', link: '/en/module/ulticleaner'},
             {text: 'UltiRecipe — Custom Recipes', link: '/en/module/ultirecipe'},
             {text: 'UltiEconomy — Economy System', link: '/en/module/ultieconomy'},
-            {text: 'UltiBot — Fake Player Bots', link: '/en/module/ultibot'},
+            {text: 'UltiBot (discontinued) — Fake Player Bots', link: '/en/module/ultibot'},
         ]
     }
 ]

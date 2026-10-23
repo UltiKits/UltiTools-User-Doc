@@ -9,6 +9,7 @@ plugins/UltiTools/
 │   ├── UltiEssentials/
 │   ├── UltiChat/
 │   └── ...
+├── lang/              Official language files (zh.json, en.json) and custom copies
 ├── sqliteDB/          SQLite database files (when using sqlite storage)
 ├── backups/           UltiBackup module backup files
 ├── config.yml         Core configuration file

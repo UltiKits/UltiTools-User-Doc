@@ -28,8 +28,10 @@
 ### 如何将服务器连接到网页面板？
 
 1. 在 [panel.ultikits.com](https://panel.ultikits.com) 注册账号
-2. 在 `config.yml` 中填写账号密码
-3. 重启服务器
+2. 在**服务器控制台**执行 `ulticloud login`，在浏览器打开其登录链接，登录并批准关联服务器
+3. 用 `ulticloud status` 查看状态；用 `ulticloud logout` 解除关联
+
+凭据保存在服务器根目录的 `.ultikits/credentials.json`，不是 `config.yml`。请勿手动修改或分享凭据文件。
 
 详见 [账号绑定](/guide/essentials/account-bind)。
 

@@ -20,7 +20,7 @@ const sidebarModuleZH: DefaultTheme.SidebarItem[] = [
             {text: 'UltiCleaner — 智能清道夫', link: '/module/ulticleaner'},
             {text: 'UltiRecipe — 自定义合成', link: '/module/ultirecipe'},
             {text: 'UltiEconomy — 经济系统', link: '/module/ultieconomy'},
-            {text: 'UltiBot — 假人机器人', link: '/module/ultibot'},
+            {text: 'UltiBot（已停止维护）— 假人机器人', link: '/module/ultibot'},
         ]
     }
 ]
