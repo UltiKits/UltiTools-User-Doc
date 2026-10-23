@@ -6,11 +6,7 @@ const navEN: DefaultTheme.NavItem[] = [
         activeMatch: '^/en/guide/',
         items: [
             {text: 'Guide', link: '/en/guide/introduction'},
-            {text: 'Quick Start', link: '/en/guide/quick-start'},
-            {
-                text: 'Migrate from UltiTools 5',
-                link: '/en/guide/migration'
-            }
+            {text: 'Quick Start', link: '/en/guide/quick-start'}
         ]
     },
     {

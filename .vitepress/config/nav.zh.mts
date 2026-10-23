@@ -10,10 +10,6 @@ const navZH: DefaultTheme.NavItem[] = [
             {
                 text: 'UltiTools 5 文档',
                 link: 'https://v5.ultitools.ultikits.com'
-            },
-            {
-                text: '从 UltiTools 5 迁移',
-                link: '/guide/migration'
             }
         ]
     },

@@ -12,7 +12,6 @@ plugins/UltiTools/
 ├── sqliteDB/          SQLite database files (when using sqlite storage)
 ├── backups/           UltiBackup module backup files
 ├── config.yml         Core configuration file
-├── data.json          Core data (server UUID, etc.)
 └── ultitools.db       Main SQLite database
 ```
 
@@ -31,12 +30,13 @@ Each module's configuration and data files are stored in `pluginConfig/ModuleNam
 The core configuration file. Contains settings for:
 
 - **Storage backend** (`datasource.type`): json, sqlite, or mysql
-- **Language** (`language`): zh or en
-- **UltiKits account** (`account`): Credentials for web panel binding
+- **Language** (`language`): `zh`, `en` or a custom name such as `en-myserver`
+- **Email** (`email`): Optional SMTP service
+- **Panel** (`ultipanel`): Remote capabilities and logging; link with `ulticloud login` in the server console
 - **MySQL connection** (`mysql`): Database configuration when using MySQL
 
 See [Configuration](/en/guide/essentials/config).
 
-### data.json
+### .ultikits/credentials.json (server root, from 6.3.0)
 
-Stores server UUID and other core data. **Do not modify this file manually.**
+Server credentials are stored in `.ultikits/credentials.json` under the server root, outside `plugins/UltiTools/`. An existing `plugins/UltiTools/data.json` is migrated there. **Do not edit the credential file manually or share it.** Use `ulticloud login` in the server console to link the panel.
