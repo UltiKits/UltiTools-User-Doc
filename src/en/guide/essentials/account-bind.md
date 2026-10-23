@@ -8,15 +8,13 @@ Visit [panel.ultikits.com](https://panel.ultikits.com) and click Register to cre
 
 ## Bind Your Server
 
-Add your credentials to `plugins/UltiTools/config.yml`:
+Run this in the **server console** (not in game):
 
-```yaml
-account:
-  username: "your_username"
-  password: "your_password"
+```
+ulticloud login
 ```
 
-Restart the server. UltiTools will automatically connect to UltiCloud.
+Open the printed magic link in your browser, sign in with your UltiKits account and approve the server link. Use `ulticloud status` to check the link state and `ulticloud logout` to remove it. Credentials are stored in `.ultikits/credentials.json` under the server root. Do not edit or share that file; do not put your account password in `config.yml`.
 
 ## What Does Binding Enable?
 

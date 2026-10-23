@@ -3,28 +3,18 @@
 UltiBot is a UltiTools framework module that spawns fake player bots on your server. These bots are real player entities that look and behave like actual players — they can jump, sneak, sprint, attack, mine, use items, send chat messages, and execute commands. The module includes a macro recording system that lets you record a sequence of actions and replay them later. Bot skins are fetched in real-time from Mojang's servers, so they look identical to real players. UltiBot is useful for testing server plugins, simulating player behavior, and building NPC scenes.
 
 :::warning
-UltiBot uses NMS (Net Minecraft Server internals) and has strict server version requirements. It currently supports **Paper 1.20.1 through 1.21.4** only. Spigot is not supported. Make sure your server version is within the supported range.
+UltiBot is discontinued and its repository is archived. This page is a historical reference, not a maintained installation or compatibility recommendation.
 :::
 
 ## Installation
 
-There are two ways to install:
-
-**Option 1: Via UltiTools Plugin Manager (Recommended)**
-
-Run in the server console or in-game:
-
-```
-/upm install UltiBot
-```
-
-**Option 2: Manual Installation**
+The following manual installation steps are historical only. UltiBot is discontinued; installing it through UPM is no longer recommended.
 
 1. Download the `UltiBot.jar` file
 2. Place the JAR file into the `plugins/UltiTools/plugins/` directory
 3. Restart the server
 
-After installation, the configuration file is automatically generated at `plugins/UltiTools/UltiBot/config.yml`.
+Historically, the module generated its configuration file at `plugins/UltiTools/pluginConfig/UltiBot/config.yml`.
 
 ## Quick Start
 
@@ -128,7 +118,7 @@ These commands are primarily for developers testing plugin interactions:
 
 ## Configuration
 
-Configuration file path: `plugins/UltiTools/UltiBot/config.yml`
+Configuration file path: `plugins/UltiTools/pluginConfig/UltiBot/config.yml`
 
 ```yaml
 # Maximum bots each player can spawn (range: 1-100)
@@ -168,24 +158,6 @@ auto-respawn: true
 | `bot-prefix` | string | "[Bot] " | Name prefix for bots |
 | `auto-remove-on-quit` | boolean | true | Auto-remove a player's bots when they leave |
 | `auto-respawn` | boolean | true | Auto-respawn bots after death |
-
-## Supported Server Versions
-
-UltiBot uses NMS (Net Minecraft Server) code to implement fake players, so it only supports specific server versions.
-
-| Minecraft Version | Status |
-|-------------------|--------|
-| 1.20.1 | Supported |
-| 1.20.2 ~ 1.20.3 | Supported |
-| 1.20.4 | Supported |
-| 1.20.5 ~ 1.20.6 | Supported |
-| 1.21 ~ 1.21.1 | Supported |
-| 1.21.2 ~ 1.21.3 | Supported |
-| 1.21.4 | Supported |
-
-:::warning
-UltiBot only supports Paper servers, not Spigot. Requires Java 21 runtime (standard requirement for Paper 1.20.4+).
-:::
 
 ## Usage Tutorials
 
@@ -284,14 +256,12 @@ Alternatively, the `auto-remove-on-quit: true` setting (enabled by default) auto
 A: Check the following:
 1. Confirm the JAR file is placed in `plugins/UltiTools/plugins/`, not the `plugins/` root directory
 2. A server restart is required after installation; `/ul reload` only reloads configuration, it cannot load new module JARs
-3. Make sure you are using a **Paper** server, not Spigot (UltiBot requires Paper's NMS mappings)
-4. Confirm your Minecraft version is between 1.20.1 and 1.21.4
-5. Make sure UltiTools-API is version 6.2.1 or higher
-6. Check the console for "unsupported version" error messages
+3. This discontinued module historically required UltiTools-API 6.2.1 or higher; this is not a claim of compatibility with current framework releases
+4. Check the console for errors; this archived module no longer receives compatibility fixes
 
 **Q: Config changes not taking effect?**
 
-A: After modifying `plugins/UltiTools/UltiBot/config.yml`, use `/bot reload` to reload the configuration, or `/ul reload`.
+A: After modifying `plugins/UltiTools/pluginConfig/UltiBot/config.yml`, use `/bot reload` to reload the configuration, or `/ul reload`.
 
 **Q: How to set up permissions?**
 
@@ -313,7 +283,7 @@ A: Each bot is a real player entity, so many bots will increase server load. Rec
 
 **Q: Why is my server version not supported?**
 
-A: UltiBot uses NMS (Net Minecraft Server internals) to implement fake players, and NMS changes with every Minecraft version. Currently versions 1.20.1 through 1.21.4 are supported. If your version is outside this range, you'll need to wait for the developer to add support for that version.
+A: UltiBot used internal server code to implement fake players, which needed version-specific adapters. The module is now discontinued; do not expect new adapters or compatibility fixes.
 
 **Q: What can and can't bots do?**
 
@@ -337,5 +307,5 @@ Added: Skin system with real-time Mojang API fetching and caching
 Added: Bot chat messaging and command execution
 Added: Auto-management features (auto-remove on owner quit, auto-respawn on death)
 Added: Testing support (message capture, OP toggle, GUI interaction, inventory viewing)
-Added: Multi-version NMS support (Paper 1.20.1 through 1.21.4)
+Added: Multi-version NMS support (historical feature; no current compatibility claim)
 Added: Chinese and English language support

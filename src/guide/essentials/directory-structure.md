@@ -9,10 +9,10 @@ plugins/UltiTools/
 │   ├── UltiEssentials/
 │   ├── UltiChat/
 │   └── ...
+├── lang/              官方语言文件（zh.json、en.json）及自定义副本
 ├── sqliteDB/          SQLite 数据库文件（使用 sqlite 存储时）
 ├── backups/           UltiBackup 模块的备份文件
 ├── config.yml         核心配置文件
-├── data.json          核心数据（服务器 UUID 等）
 └── ultitools.db       主 SQLite 数据库
 ```
 
@@ -31,12 +31,13 @@ plugins/UltiTools/
 UltiTools 的核心配置文件，包含以下设置：
 
 - **数据存储方式**（`datasource.type`）：json、sqlite 或 mysql
-- **语言**（`language`）：zh 或 en
-- **UltiKits 账号**（`account`）：绑定网页面板的账号
+- **语言**（`language`）：`zh`、`en` 或 `zh-myserver` 等自定义名称
+- **邮件**（`email`）：可选的 SMTP 服务
+- **面板**（`ultipanel`）：远程能力与日志；在服务器控制台执行 `ulticloud login` 绑定
 - **MySQL 连接**（`mysql`）：使用 MySQL 存储时的数据库配置
 
 详见 [配置文件](/guide/essentials/config)。
 
-### data.json
+### .ultikits/credentials.json（服务器根目录，6.3.0 起）
 
-存储服务器 UUID 等核心数据，**请勿手动修改此文件**。
+服务器凭据保存在服务器根目录下的 `.ultikits/credentials.json`，不在 `plugins/UltiTools/` 中。已有的 `plugins/UltiTools/data.json` 会迁移到此处。**请勿手动修改或分享凭据文件。** 绑定面板请在服务器控制台执行 `ulticloud login`。

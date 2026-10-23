@@ -28,7 +28,7 @@ To customise messages, copy an official file, rename it, and select the new name
 
 ### Three steps
 
-1. **Copy**: in the folder whose messages you want to change, copy an official file under a new name that starts with its language code and a hyphen, keeping the extension. For example, copy `en.json` to `en-myserver.json`.
+1. **Copy**: in the folder whose messages you want to change, copy an official file under a new name that starts with its language code and a hyphen, keeping the extension. The name before the extension must start with an ASCII letter or digit and contain only ASCII letters, digits, `-` and `_`; a name such as `en.myserver` is rejected and no custom file is read. For example, copy `en.json` to `en-myserver.json`.
 2. **Edit**: edit the copy. It may keep only the entries you change.
 3. **Select**: set this in `plugins/UltiTools/config.yml`:
 
@@ -44,15 +44,15 @@ That one setting applies to UltiTools and to every module. Put a copy with the s
 
 Every entry your copy lacks comes from the official language its name starts with: `en-myserver` uses the official `en`, `zh-myserver` the official `zh`. So a copy may contain only the few lines you change, and every other message still shows.
 
-A name that starts with no shipped language code (for example `myserver`) uses English for the missing messages, and the console shows one warning suggesting a better name.
+A name that starts with no shipped language code (for example `myserver`) uses English for the missing messages, and the console shows warnings suggesting a better name: one from UltiTools and one from each module that uses this fallback.
 
-After an upgrade, if an entry in your copy has a different number of `%s`/`%d` placeholders than the new official text, or lacks a placeholder such as `{PLAYER}` that the official text has (placeholders you added yourself are kept), that entry uses the official text and the console shows one warning naming the file and the entry. Your file is not changed; update that entry from the new official file.
+After an upgrade, if an entry in your copy has a different number of `%s`/`%d` placeholders than the new official text, changes a placeholder type at the same argument position (for example `%s` to `%d` or the reverse, even with the same count), or lacks a placeholder such as `{PLAYER}` that the official text has (placeholders you added yourself are kept), that entry uses the official text and the console shows one warning naming the file and the entry. Your file is not changed; update that entry from the new official file.
 
 Give your copy a name no module ships, such as `en-myserver`. A plain language code other than `en` and `zh` (such as `fr`) may match a language file a later release ships; your file would then be treated as an official file and restored (your version kept as `.bak`).
 
 ### Your file is never overwritten
 
-A custom file such as `en-myserver.json` is yours: no start, `/ul reload`, upgrade or module update ever writes, replaces or backs it up.
+A custom file such as `en-myserver.json` is yours: no start, `/ul reload`, upgrade or module update ever writes, replaces or backs it up. The explanatory comments written into module configuration files also use your custom wording. Before deleting or renaming a custom file, switch `language` back to an official code and restart or run `/ul reload` while the custom file still exists; otherwise those comments can keep the custom wording.
 
 ### If you edited an official file directly
 
@@ -63,5 +63,5 @@ To get your edits back, **copy** the `.bak` file to a custom file (for example `
 An official file that is read-only, or a symbolic link, is not restored; the console shows a line saying so.
 
 ::: tip Before 6.3.0
-Before 6.3.0, UltiTools' own messages were never read from a file on disk and modules did not support custom names; a module's official language file you edited directly was kept.
+Before 6.3.0, UltiTools' own messages were never read from a file on disk and modules did not support custom names; a module's official language file you edited directly was kept. On the first start after upgrading from 6.2.x, edited official files of every shipped language in each module are restored, not just the selected language. Look for `.bak` files in each module's `lang/` folder and copy them to custom files as described above.
 :::

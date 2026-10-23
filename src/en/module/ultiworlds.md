@@ -304,7 +304,7 @@ These permission nodes have no declared default grant and are operators-only by 
 | Permission | Description | Default |
 |------------|-------------|---------|
 | `ultiworlds.use` | Basic usage (open GUI, teleport, view info) | OP (grant explicitly to players) |
-| `ultiworlds.admin` | Admin permission (includes all sub-permissions) | OP |
+| `ultiworlds.admin` | Controls which admin commands the help lists; grant each `ultiworlds.admin.*` node separately (a wildcard provided by your permission plugin also works) | OP |
 | `ultiworlds.admin.create` | Create worlds | OP |
 | `ultiworlds.admin.delete` | Delete worlds | OP |
 | `ultiworlds.admin.load` | Load worlds | OP |

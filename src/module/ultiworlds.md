@@ -304,7 +304,7 @@ world_isolation:
 | 权限 | 描述 | 默认 |
 |------|------|------|
 | `ultiworlds.use` | 基础使用权限（打开 GUI、传送、查看信息） | OP（需显式授权普通玩家） |
-| `ultiworlds.admin` | 管理员权限（包含所有子权限） | OP |
+| `ultiworlds.admin` | 控制帮助中列出的管理命令；各项 `ultiworlds.admin.*` 权限需单独授予（也可使用权限插件提供的通配符） | OP |
 | `ultiworlds.admin.create` | 创建世界 | OP |
 | `ultiworlds.admin.delete` | 删除世界 | OP |
 | `ultiworlds.admin.load` | 加载世界 | OP |

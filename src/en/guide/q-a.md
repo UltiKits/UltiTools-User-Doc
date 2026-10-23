@@ -28,8 +28,10 @@ Switching storage backends does not automatically migrate data. Back up your dat
 ### How do I connect my server to the web panel?
 
 1. Register at [panel.ultikits.com](https://panel.ultikits.com)
-2. Enter your credentials in `config.yml`
-3. Restart the server
+2. Run `ulticloud login` in the **server console**, then open its magic link in your browser, sign in and approve the server link
+3. Check with `ulticloud status`; use `ulticloud logout` to remove the link
+
+Credentials are saved in `.ultikits/credentials.json` under the server root, not in `config.yml`. Do not edit or share the credential file.
 
 See [Account Binding](/en/guide/essentials/account-bind).
 

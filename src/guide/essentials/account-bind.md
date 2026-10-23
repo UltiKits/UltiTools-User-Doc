@@ -8,15 +8,13 @@ UltiKits 账号用于将你的 Minecraft 服务器连接到网页面板和 UltiC
 
 ## 绑定服务器
 
-在 `plugins/UltiTools/config.yml` 中填写你的账号信息：
+在**服务器控制台**执行（不是游戏内）：
 
-```yaml
-account:
-  username: "你的用户名"
-  password: "你的密码"
+```
+ulticloud login
 ```
 
-重启服务器后，UltiTools 会自动连接到 UltiCloud。
+在浏览器打开控制台输出的登录链接（magic link），登录 UltiKits 账号并批准关联服务器。使用 `ulticloud status` 查看关联状态，使用 `ulticloud logout` 解除关联。凭据保存在服务器根目录下的 `.ultikits/credentials.json`；请勿手动修改或分享该文件，也不要将账号密码填入 `config.yml`。
 
 ## 绑定后可以做什么？
 

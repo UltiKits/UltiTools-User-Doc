@@ -3,28 +3,18 @@
 UltiBot 是 UltiTools 框架的假人（Fake Player）模块，可以在服务器中生成看起来和真实玩家一样的 NPC 机器人。这些机器人拥有真实的玩家实体，能执行跳跃、潜行、冲刺、攻击、挖掘、使用物品等各种动作，还能发送聊天消息和执行命令。模块内置了宏录制系统（Macro），可以录制一连串动作然后反复播放。机器人的皮肤可以从 Mojang 服务器实时获取，看起来和真实玩家一模一样。适用于测试服务器插件、模拟玩家行为、搭建 NPC 场景等用途。
 
 :::warning
-UltiBot 使用 NMS（服务器内部代码），因此对服务器版本有严格要求。目前支持 **Paper 1.20.1 ~ 1.21.4**，不支持 Spigot。请确认你的服务器版本在支持范围内。
+UltiBot 已停止维护，仓库已归档。本页仅供历史参考，不是仍在维护的安装或兼容性建议。
 :::
 
 ## 安装方式
 
-有两种安装方式：
-
-**方式一：通过 UPM 安装（推荐）**
-
-在服务器控制台或游戏内执行：
-
-```
-/upm install UltiBot
-```
-
-**方式二：手动安装**
+以下手动安装步骤仅供历史参考。UltiBot 已停止维护，不再推荐通过 UPM 安装。
 
 1. 下载 `UltiBot.jar` 文件
 2. 放入服务器的 `plugins/UltiTools/plugins/` 目录
 3. 重启服务器
 
-安装后会自动在 `plugins/UltiTools/UltiBot/config.yml` 生成配置文件。
+历史版本安装后会在 `plugins/UltiTools/pluginConfig/UltiBot/config.yml` 生成配置文件。
 
 ## 快速上手
 
@@ -130,7 +120,7 @@ UltiBot 使用 NMS（服务器内部代码），因此对服务器版本有严�
 
 ## 配置
 
-配置文件路径：`plugins/UltiTools/UltiBot/config.yml`
+配置文件路径：`plugins/UltiTools/pluginConfig/UltiBot/config.yml`
 
 ```yaml
 # 每个玩家最多可以生成的机器人数量（范围：1-100）
@@ -170,24 +160,6 @@ auto-respawn: true
 | `bot-prefix` | 字符串 | "[Bot] " | 机器人名称前缀 |
 | `auto-remove-on-quit` | 布尔值 | true | 主人退出时自动移除其机器人 |
 | `auto-respawn` | 布尔值 | true | 机器人死亡后自动重生在原位 |
-
-## 支持的服务器版本
-
-UltiBot 使用 NMS（Net Minecraft Server）代码实现假人功能，因此只支持特定的服务器版本。
-
-| Minecraft 版本 | 支持情况 |
-|----------------|----------|
-| 1.20.1 | 支持 |
-| 1.20.2 ~ 1.20.3 | 支持 |
-| 1.20.4 | 支持 |
-| 1.20.5 ~ 1.20.6 | 支持 |
-| 1.21 ~ 1.21.1 | 支持 |
-| 1.21.2 ~ 1.21.3 | 支持 |
-| 1.21.4 | 支持 |
-
-:::warning
-UltiBot 只支持 Paper 服务端，不支持 Spigot。需要 Java 21 运行环境（Paper 1.20.4+ 的标准要求）。
-:::
 
 ## 使用教程
 
@@ -286,14 +258,12 @@ UltiBot 的一个重要用途是测试其他插件。机器人可以执行命令
 A: 检查以下几项：
 1. 确认 JAR 文件放在 `plugins/UltiTools/plugins/` 目录下，不是 `plugins/` 根目录
 2. 安装新模块后必须重启服务器，`/ul reload` 只能重载配置文件
-3. 确认你使用的是 **Paper** 服务端，不是 Spigot（UltiBot 依赖 Paper 的 NMS 映射）
-4. 确认 Minecraft 版本在 1.20.1 ~ 1.21.4 范围内
-5. 确认 UltiTools-API 版本不低于 6.2.1
-6. 检查控制台是否有 "unsupported version" 的报错
+3. 这个已停更模块历史上要求 UltiTools-API 6.2.1 或更高；这不表示它与当前框架版本兼容
+4. 检查控制台报错；归档模块不再提供兼容性修复
 
 **Q: 改了配置文件没效果？**
 
-A: 修改 `plugins/UltiTools/UltiBot/config.yml` 后，可以用 `/bot reload` 重新加载配置，或者用 `/ul reload`。
+A: 修改 `plugins/UltiTools/pluginConfig/UltiBot/config.yml` 后，可以用 `/bot reload` 重新加载配置，或者用 `/ul reload`。
 
 **Q: 权限怎么设置？**
 
@@ -315,7 +285,7 @@ A: 每个机器人相当于一个真实玩家实体，所以大量机器人确�
 
 **Q: 为什么我的服务器版本不支持？**
 
-A: UltiBot 使用 NMS（Net Minecraft Server，Minecraft 服务器内部代码）来实现假人功能，NMS 在每个 Minecraft 版本都会变化。目前已实现 1.20.1 到 1.21.4 的适配。如果你的版本不在支持范围内，需要等待开发者添加对应版本的适配模块。
+A: UltiBot 使用服务器内部代码实现假人功能，需要针对版本编写适配。模块现已停止维护，请勿期待新增适配或兼容性修复。
 
 **Q: 机器人能做什么不能做什么？**
 
@@ -339,5 +309,5 @@ A: 皮肤从 Mojang 的 API 获取。如果失败可能是：输入的玩家名�
 新增：机器人聊天和命令执行功能
 新增：自动管理功能（主人退出时自动移除、死亡自动重生）
 新增：测试辅助功能（消息捕获、OP 切换、GUI 交互、背包查看）
-新增：多版本 NMS 支持（Paper 1.20.1 ~ 1.21.4）
+新增：多版本 NMS 支持（历史功能，不代表当前兼容性）
 新增：中文和英文语言支持
