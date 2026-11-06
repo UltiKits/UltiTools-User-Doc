@@ -8,7 +8,7 @@
 
 **Possible Causes:**
 - JAR file not in the correct location (should be in `plugins/`)
-- Server software does not meet the supported minimum (as of v6.3.2): Paper 1.19.2 (build 163 or later) or newer
+- Server software does not meet the supported minimum (as of v6.3.0): Paper 1.19.2 (build 163 or later) or newer
 - Java version does not meet your Paper version's requirements: Java 17 for Paper 1.19.2–1.20.4, Java 21 from Paper 1.20.5
 
 **Solution:** Check `logs/latest.log` for UltiTools-related error messages.
