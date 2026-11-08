@@ -8,6 +8,7 @@
 
 **可能原因**：
 - JAR 文件没有放在正确的位置（应放在 `plugins/` 目录）
+- 使用的是 Spigot（或其他非 Paper 服务端）而不是 Paper：UltiTools 只支持 Paper
 - 服务端不满足最低支持要求（自 v6.3.0 起）：Paper 1.19.2（build 163 或更高构建）或更新版本
 - Java 版本不满足对应 Paper 版本的要求：Paper 1.19.2–1.20.4 使用 Java 17，Paper 1.20.5 起使用 Java 21
 

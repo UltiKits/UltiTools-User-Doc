@@ -17,9 +17,7 @@ Panel URL: [panel.ultikits.com](https://panel.ultikits.com)
 
 ## Connecting Your Server
 
-To connect your Minecraft server to the panel:
-
-Run this in the **server console** (not in game):
+To connect your Minecraft server to the panel, run this in the **server console** (not in game):
 
 ```
 ulticloud login
